@@ -17,7 +17,6 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 /src/main/generated/
-/src/main/resources/application.yml
 
 ### IntelliJ IDEA ###
 .idea
@@ -48,7 +47,3 @@ dump.rdb
 DS_Store
 
 key/
-
-## Resources
-/src/main/resources
-/src/test/resources/application-test.yaml
