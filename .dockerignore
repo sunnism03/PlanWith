@@ -1,0 +1,13 @@
+.git
+.github
+.gradle
+.idea
+*.iml
+
+.env
+.env.*
+runtime.env
+
+build/tmp
+build/reports
+build/test-results
