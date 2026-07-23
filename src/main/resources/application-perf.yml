@@ -1,0 +1,40 @@
+spring:
+  config:
+    activate:
+      on-profile: perf
+
+management:
+  server:
+    port: 9091
+    address: 0.0.0.0
+
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+
+  endpoint:
+    health:
+      show-details: never
+
+  metrics:
+    tags:
+      application: planwith
+
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+
+      percentiles:
+        http.server.requests:
+          - 0.5
+          - 0.95
+          - 0.99
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
