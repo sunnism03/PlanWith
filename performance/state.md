@@ -1,13 +1,13 @@
 workflowVersion: 2
-status: IN_PROGRESS
-currentPhase: phase-7
-lastCompletedPhase: phase-6-5
-nextAction: "Create performance/plans/selected-experiments.md"
+status: COMPLETED
+currentPhase: phase-8a
+lastCompletedPhase: phase-7
+nextAction: "Start the Baseline Goal at Phase 8A and create performance/results/EXP-01/baseline-plan.md"
 
 baseline:
   generation: 0
   status: NOT_STARTED
-  harnessCommit: 927ea7daefe2fe87607c30e1c9a1b340d30e28e4
+  harnessCommit: 6776ac4482903dde42ee3db6c69649abb7ddabab
   baselineCommit: null
   baselineEvidenceCommit: null
   baselineBranch: null
@@ -75,10 +75,11 @@ phases:
       - performance/harness/jmeter/chatbot-c1-dry-run.jmx
     blockers: []
   phase-7:
-    status: IN_PROGRESS
+    status: COMPLETED
     startedAt: "2026-07-28T18:01:22Z"
-    completedAt: null
-    outputs: []
+    completedAt: "2026-07-28T18:01:22Z"
+    outputs:
+      - performance/plans/selected-experiments.md
     blockers: []
   phase-8a:
     status: NOT_STARTED
@@ -93,8 +94,54 @@ phases:
     outputs: []
     blockers: []
 
-selectedExperimentIds: []
-experiments: {}
+selectedExperimentIds:
+  - EXP-01
+experiments:
+  EXP-01:
+    hypothesisId:
+      - CHAT-PERF-01
+      - CHAT-REL-01
+    scenarioId: C1
+    status: NOT_STARTED
+    lastCompletedStep: phase-7-selection
+    baseline:
+      status: NOT_RUN
+      runId: null
+      verdict: null
+      artifactManifest: null
+      summary: null
+    git:
+      branch: null
+      worktree: null
+      baseCommit: null
+      planCommit: null
+      improvementCommit: null
+      reportCommit: null
+    improvement:
+      status: NOT_STARTED
+      changeScopeStatus: null
+      planPath: null
+    after:
+      status: NOT_RUN
+      runId: null
+      artifactManifest: null
+      summary: null
+    comparison:
+      status: NOT_STARTED
+      verdict: null
+      path: null
+    cleanup:
+      status: NOT_REQUIRED
+      lastRunId: dry-20260728T180114Z-35705
+      error: null
+    rollback:
+      status: NOT_REQUIRED
+      command: null
+      error: null
+    retryCount: 0
+    blockers: []
+    outputs:
+      - performance/plans/selected-experiments.md
 globalBlockers: []
 completedOutputs:
   - performance/plans/context-verification.md
@@ -106,3 +153,4 @@ completedOutputs:
   - performance/plans/jmeter-test-design.md
   - performance/harness/harness-manifest.json
   - performance/plans/test-harness-report.md
+  - performance/plans/selected-experiments.md

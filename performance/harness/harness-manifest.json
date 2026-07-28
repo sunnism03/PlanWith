@@ -1,7 +1,7 @@
 {
   "harnessVersion": "1.0.0",
   "createdAt": "2026-07-28T18:01:22Z",
-  "harnessCommit": "927ea7daefe2fe87607c30e1c9a1b340d30e28e4",
+  "harnessCommit": "6776ac4482903dde42ee3db6c69649abb7ddabab",
   "jmeterPlanHashes": {
     "jmeter/chatbot-c1-dry-run.jmx": "3c2db653593628d046fe3b011554203a78517bbf10da1bbddb0550d9d589fcc6"
   },
@@ -14,9 +14,9 @@
     "bin/dry-run.sh": "83d0552a70b90c2fb947411dc22ef118b9d1d6785c3c3b4c5ed2632132372165",
     "bin/scan-secrets.sh": "359bcb28be09b32c67848db03a79a4a02ee9622a62cf0dea2d2ee87fae0130cb",
     "bin/validate-comparison.sh": "c5599773490fc7ae2d3226c386a9710bcf2d18a4c1c7c4a289dc88f0115f7993",
-    "bin/validate-harness.sh": "9f4406eae95c868eb3fc97d7e1f0256015b37240ef6c67e50cd5b7eb65f99e60",
+    "bin/validate-harness.sh": "f93a1f3b46999fd972123ab9757d5b3044d0459d3245dc1bc4c64b8329d04f08",
     "bin/validate-plans.sh": "acc146f0aaaef3bb82cf7eced08e4a26d98a319eb6faa5d9ad47c3645b0c6dea",
-    "bin/validate-run-artifacts.sh": "88f414e67fd8bffd7be626773a40a2e975d5afd9b14716953f010567f850726f",
+    "bin/validate-run-artifacts.sh": "14a39be3a03370f69e3b3b81bf867b26130b693bf3186c543d5dfe2a06707a98",
     "bin/verify-db-invariant.sh": "0d7451c0f2cd68d40016db43bdfd223d2642eb4996b1846fd22911e33a461929",
     "bin/verify-redis-invariant.sh": "fd545dbf8cb1d6878fa03e840685125f45eb7121d6be118f9b7f325bcce3abd3"
   },

@@ -66,7 +66,7 @@ Failed raw runs remain under ignored runtime directories and were not rewritten 
 
 ## Commit boundary
 
-- `HARNESS_COMMIT`: `927ea7daefe2fe87607c30e1c9a1b340d30e28e4`
+- `HARNESS_COMMIT`: `6776ac4482903dde42ee3db6c69649abb7ddabab`
 - It contains harness content only.
 - `harness-manifest.json`, this report and state are stored in the following metadata-only local commit.
 - No remote push or PR was performed.
