@@ -7,7 +7,7 @@ nextAction: "Start the Baseline Goal at Phase 8A and create performance/results/
 baseline:
   generation: 0
   status: NOT_STARTED
-  harnessCommit: 6776ac4482903dde42ee3db6c69649abb7ddabab
+  harnessCommit: 0b3f4d8b05f344e286d50d41e9a4c322bcf26f42
   baselineCommit: null
   baselineEvidenceCommit: null
   baselineBranch: null
@@ -132,7 +132,7 @@ experiments:
       path: null
     cleanup:
       status: NOT_REQUIRED
-      lastRunId: dry-20260728T180114Z-35705
+      lastRunId: dry-20260728T181551Z-40677
       error: null
     rollback:
       status: NOT_REQUIRED

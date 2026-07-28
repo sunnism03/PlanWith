@@ -19,7 +19,7 @@
 
 ## Dry-run environment
 
-- runId: `dry-20260728T180114Z-35705`
+- runId: `dry-20260728T181551Z-40677`
 - users: 1
 - OpenAI mode: `MOCK`
 - application: local Spring Boot jar
@@ -54,7 +54,8 @@ No JWT, generated password, JWT signing secret or OpenAI key is recorded here.
 3. Test nickname exceeded DB column: fixture shortened.
 4. Initial assertion expected HTTP 201: runtime proved HTTP 200 with body code 201; design and JMX corrected.
 5. JTL validation quoting bug: harness fixed.
-6. Final fresh run passed all required functional checks.
+6. A completion audit found that H2 shutdown changed the DB file after the manifest was generated.
+7. Process shutdown was moved before manifest generation; the final fresh run passed validation both immediately and after shutdown.
 
 Failed raw runs remain under ignored runtime directories and were not rewritten as successes.
 
@@ -66,7 +67,7 @@ Failed raw runs remain under ignored runtime directories and were not rewritten 
 
 ## Commit boundary
 
-- `HARNESS_COMMIT`: `6776ac4482903dde42ee3db6c69649abb7ddabab`
+- `HARNESS_COMMIT`: `0b3f4d8b05f344e286d50d41e9a4c322bcf26f42`
 - It contains harness content only.
 - `harness-manifest.json`, this report and state are stored in the following metadata-only local commit.
 - No remote push or PR was performed.
