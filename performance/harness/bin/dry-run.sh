@@ -19,6 +19,12 @@ cleanup_processes() {
   test -z "$app_pid" || kill "$app_pid" 2>/dev/null || true
   test -z "$mock_pid" || kill "$mock_pid" 2>/dev/null || true
   test -z "$redis_pid" || kill "$redis_pid" 2>/dev/null || true
+  test -z "$app_pid" || wait "$app_pid" 2>/dev/null || true
+  test -z "$mock_pid" || wait "$mock_pid" 2>/dev/null || true
+  test -z "$redis_pid" || wait "$redis_pid" 2>/dev/null || true
+  app_pid=
+  mock_pid=
+  redis_pid=
 }
 trap cleanup_processes EXIT INT TERM
 
@@ -118,6 +124,7 @@ cat > "$run_dir/summary.md" <<EOF
 EOF
 
 rm -f "$run_dir/users.csv" "$run_dir/authorization.runtime"
+cleanup_processes
 "$root_dir/performance/harness/bin/create-artifact-manifest.sh" "$run_dir" "$run_id"
 "$root_dir/performance/harness/bin/validate-run-artifacts.sh" "$run_dir"
 "$root_dir/performance/harness/bin/scan-secrets.sh" "$run_dir"
