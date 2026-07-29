@@ -1,0 +1,106 @@
+{
+  "manifestVersion": 1,
+  "generatedAt": "2026-07-29T02:25:42Z",
+  "baselineGeneration": 0,
+  "readinessVerdict": "READY_TO_FREEZE",
+  "baselineCommit": null,
+  "candidateHead": "ffb32606d4bb49d757b5f91546e7d0dd462c38d6",
+  "harnessCommit": "a01ac11c7bc194e80d96eec96e56a284e3cbc8ef",
+  "baselineBranch": null,
+  "candidateBranch": "perf/chatbot-schedule",
+  "frozenAt": null,
+  "hashAlgorithm": "SHA-256",
+  "hashConstruction": "For each group, sort listed existing paths bytewise, emit '<file-sha256><two spaces><path><newline>', then SHA-256 the resulting stream.",
+  "executionPathHashes": {
+    "applicationSource": {
+      "paths": ["src/main/java/**"],
+      "fileCount": 214,
+      "sha256": "26a7f7e0a92d64434d6e0acb8c87b5c6a28cfba00af2c9f70203c2f8ea3bbd07"
+    },
+    "testSource": {
+      "paths": ["src/test/**"],
+      "fileCount": 1,
+      "sha256": "6802016940f0bef51eaaccc5a1f7b75a80f195ec3b70504bb5a757374990cd16"
+    },
+    "gradle": {
+      "paths": ["build.gradle", "settings.gradle", "gradlew", "gradlew.bat", "gradle/**"],
+      "fileCount": 6,
+      "sha256": "3e80a207c3181a7a4e57bd38f6042be8a0fd7ccd594f9d40fefa7762c0fb6ba8"
+    },
+    "dbMigration": {
+      "paths": ["src/main/resources/db/**"],
+      "fileCount": 0,
+      "status": "NOT_APPLICABLE",
+      "sha256": null
+    },
+    "applicationConfig": {
+      "paths": ["src/main/resources/application*.yml", "src/main/resources/application*.yaml"],
+      "fileCount": 3,
+      "sha256": "faddcefbb56703e98024326766aabfa3007aa2c40ed7165f808a19551744390e"
+    },
+    "docker": {
+      "paths": ["Dockerfile", "docker-compose*.yml", "docker-compose*.yaml", "compose*.yml", "compose*.yaml"],
+      "fileCount": 1,
+      "sha256": "72d9b6e526ef03bc5b56b35e01b8c63fca7acbbdaa9e97a9886b96e9f633341a"
+    },
+    "harness": {
+      "paths": ["performance/harness/**"],
+      "fileCount": 18,
+      "sha256": "6ceae1bd47e090dda90a80f6324d3beb024212e50fff971c6bbead1c7596a11c"
+    },
+    "deployment": {
+      "paths": ["appspec.yml", "scripts/**"],
+      "fileCount": 3,
+      "sha256": "7527a7f1b39040c4320f583260a0775d4bc84619ea2c695b7d35a10fa2e3f5bf"
+    }
+  },
+  "jmeterScenarioHashes": {
+    "C1": {
+      "path": "performance/harness/jmeter/chatbot-c1-dry-run.jmx",
+      "sha256": "3c2db653593628d046fe3b011554203a78517bbf10da1bbddb0550d9d589fcc6"
+    }
+  },
+  "executionComponentHashes": {
+    "mockConfiguration": {
+      "path": "performance/harness/mock/openai_mock.py",
+      "sha256": "6eb3a09ff666f70587b58e02fd6d2eb07294f0894803ba5a5e961979097babe9"
+    },
+    "testDataGenerator": {
+      "path": "performance/harness/bin/bootstrap-user.sh",
+      "sha256": "6ea702274e2a127472c372a88877fce26f7055da86c36219c2ede9ace2532d26"
+    },
+    "dbInvariant": {
+      "path": "performance/harness/bin/verify-db-invariant.sh",
+      "sha256": "0d7451c0f2cd68d40016db43bdfd223d2642eb4996b1846fd22911e33a461929"
+    },
+    "redisInvariant": {
+      "path": "performance/harness/bin/verify-redis-invariant.sh",
+      "sha256": "fd545dbf8cb1d6878fa03e840685125f45eb7121d6be118f9b7f325bcce3abd3"
+    },
+    "actuatorCollector": {
+      "path": "performance/harness/bin/collect-actuator.sh",
+      "sha256": "83152bc42196996780f685db60e0a70753dc114bc76945d9388b106fb3e9f0ea",
+      "readiness": "READY",
+      "evidence": "Runtime JSONL samples were AVAILABLE at elapsed seconds 0 and 5."
+    },
+    "cleanup": {
+      "path": "performance/harness/bin/cleanup.sh",
+      "sha256": "bfc7544aaea8214f58859e5afcac853b3865c4d65f0c92da54f18d569ce2629a"
+    }
+  },
+  "activeProfile": "dev-perf",
+  "dockerImageId": null,
+  "dockerImageDigest": null,
+  "dockerStatus": "NOT_APPLICABLE_LOCAL_JAR_BASELINE",
+  "measurementEnvironment": "isolated local H2, dedicated local Redis, local mock OpenAI; measured run not executed",
+  "verificationCommand": "performance/harness/bin/validate-harness.sh plus Phase 8A SHA-256 group verification",
+  "verificationStatus": "PASS_UNFROZEN",
+  "blockers": [],
+  "knownRisks": [
+    {
+      "code": "EXISTING_GRADLE_TEST_FAILURE",
+      "classification": "FACT",
+      "evidence": "ToDoWithMeApplicationTests cannot find @SpringBootConfiguration; test sources were not modified."
+    }
+  ]
+}

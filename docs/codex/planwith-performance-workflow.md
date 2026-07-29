@@ -94,13 +94,28 @@ raw artifact는 결과 경로에 보존하되 commit하지 않는다. 각 raw ar
 commit 순서와 책임:
 
 1. `HARNESS_COMMIT`: 테스트 하네스와 dry-run 검증 구조를 고정한다.
-2. `BASELINE_COMMIT`: Phase 8A까지의 실행 가능한 애플리케이션, 하네스와 계획을 첫 measured baseline 전에 고정한다.
-3. `BASELINE_EVIDENCE_COMMIT`: baseline summary, manifest와 state만 포함한다. execution-affecting 파일을 변경하지 않는다.
+2. `BASELINE_COMMIT`: 애플리케이션과 실행 하네스의 비교 기준이다. Phase 8A까지의 실행 가능한 애플리케이션, 하네스와 계획을 첫 measured baseline 전에 고정한다.
+3. `BASELINE_EVIDENCE_COMMIT`: measured baseline 후 생성하는 metadata-only commit이다. baseline summary, artifact manifest, state와 작은 검증 metadata만 포함하며 execution-affecting 파일을 변경하지 않는다.
 4. `EXP_PLAN_COMMIT`: 해당 experiment의 `improvement-plan.md`를 애플리케이션 변경 전에 고정한다.
 5. `IMPROVEMENT_COMMIT`: 해당 experiment의 애플리케이션과 관련 테스트 변경만 포함한다.
 6. `REPORT_COMMIT`: after summary, artifact manifest와 comparison 문서만 포함하며 애플리케이션 변경을 포함하지 않는다. Phase 9 종료 시 report-only commit을 만들고 Phase 10에서 comparison을 추가한 새 report-only commit을 만들 수 있으며, state의 `reportCommit`은 최신 SHA를 가리킨다.
 
 최종 integration branch에는 원칙적으로 각 experiment의 `IMPROVEMENT_COMMIT`만 적용한다. raw artifact, report commit 또는 다른 experiment의 commit을 자동 merge하지 않는다.
+
+`BASELINE_COMMIT`과 `BASELINE_EVIDENCE_COMMIT` 사이에는 다음 execution-affecting 변경이 존재해서는 안 된다.
+
+- 애플리케이션 소스와 테스트 소스
+- Gradle 설정
+- DB migration
+- `application*.yml`
+- Dockerfile과 Compose 설정
+- JMeter JMX와 mock 설정
+- 테스트 데이터 생성 스크립트
+- DB·Redis invariant 스크립트
+- Actuator 수집 동작
+- cleanup 스크립트
+
+해당 경로에 차이가 있으면 현재 baseline generation을 `INVALIDATED`로 처리하고 새 generation의 baseline을 전체 재측정한다.
 
 Git commit SHA를 그 commit 내부 파일에 자기 참조로 기록할 수는 없다. 따라서 `HARNESS_COMMIT`과 `BASELINE_COMMIT`은 각각 검증 대상 content snapshot의 SHA이고, 그 SHA를 기록한 manifest와 state는 바로 다음 metadata-only local commit에 저장한다. metadata-only commit은 execution-affecting 파일을 변경할 수 없으며 원래 content commit의 의미를 바꾸지 않는다.
 
@@ -158,6 +173,30 @@ Phase 6.5 이전에는 문서 기반 사전 검증을 사용한다. Phase 6.5에
 ### 상태 파일
 
 `performance/state.md`는 workflowVersion, 전역 진행 위치, baseline generation, Phase별 상태와 experiment별 baseline·Git·improvement·after·comparison·cleanup·rollback 상태를 유지한다. 각 experiment의 진행 위치와 판정은 이 파일만 읽어도 복원할 수 있어야 한다.
+
+최상위 `status`는 전체 workflow 상태다. `currentPhase`는 현재 실행 중인 Phase 또는 다음 실행 대상 Phase를 나타낼 수 있고, `lastCompletedPhase`는 completion criteria를 마지막으로 통과한 Phase다. 따라서 최상위 `status: IN_PROGRESS`, `currentPhase: phase-8a`, `lastCompletedPhase: phase-7`, `phases.phase-8a.status: NOT_STARTED` 조합은 Phase 8A 시작 전의 유효한 상태다.
+
+최상위 `status: COMPLETED`는 Phase 11 completion criteria가 통과된 경우에만 설정한다. `status: COMPLETED`, `currentPhase: phase-8a`, `lastCompletedPhase: phase-7` 조합은 금지한다.
+
+Phase 9 전역 상태는 eligible experiment의 개선과 after run을 집계한다.
+
+- eligible experiment가 없으면 `NOT_APPLICABLE`
+- 아직 어떤 eligible experiment도 시작하지 않았으면 `NOT_STARTED`
+- 하나 이상 진행 중이면 `IN_PROGRESS`
+- 해결되지 않은 blocker로 진행할 수 없으면 `BLOCKED`
+- 모든 eligible experiment가 완료되었거나 사용자가 명시적으로 `SKIPPED` 처리했거나 `NOT_APPLICABLE`이면 `COMPLETED`
+
+experiment의 `BLOCKED` 상태를 Codex가 임의로 `SKIPPED`로 바꾸지 않는다.
+
+Phase 10 전역 상태는 experiment별 before/after comparison을 집계한다.
+
+- 비교 대상이 없으면 `NOT_APPLICABLE`
+- 아직 비교를 시작하지 않았으면 `NOT_STARTED`
+- 하나 이상 비교 중이면 `IN_PROGRESS`
+- 필수 baseline 또는 after evidence가 없으면 `BLOCKED`
+- 모든 비교 대상이 완료되었거나 사용자가 명시적으로 `SKIPPED` 처리했거나 `NOT_APPLICABLE`이면 `COMPLETED`
+
+Phase 11은 Phase 10이 `COMPLETED` 또는 `NOT_APPLICABLE`이고, 미해결 global blocker가 없으며, 최종 보고서에 사용할 comparison 목록이 확정된 경우에만 시작한다.
 
 허용 상태:
 
@@ -1320,13 +1359,13 @@ ID는 선정 순서대로 연속 부여하되 최대 3개이다. 예를 들어 �
 모든 baseline 계획을 완성한 뒤 첫 measured baseline 전에 다음 순서로 source를 동결한다.
 
 1. Phase 8A의 모든 `baseline-plan.md`를 완성하고 검증한다.
-2. Phase 1~8A에서 생성된 tracked planning 및 harness 파일을 로컬 commit한다.
-3. 현재 HEAD를 `BASELINE_COMMIT`으로 기록한다.
-4. 현재 branch를 `baselineBranch`로 기록한다.
-5. `HARNESS_COMMIT`이 `BASELINE_COMMIT`의 ancestor인지 검증한다.
-6. execution-affecting 파일의 SHA-256 manifest를 생성한다.
-7. `BASELINE_COMMIT`, source manifest와 baseline generation을 첫 measured baseline 전에 동결한다.
-8. source manifest와 state는 execution-affecting 변경이 없는 metadata-only local commit으로 저장하고 tracked working tree가 clean한지 확인한다.
+2. execution-affecting 파일을 검증한다.
+3. execution-affecting 파일의 SHA-256 source manifest를 생성한다.
+4. Phase 1~8A에서 생성된 tracked planning, harness와 source manifest를 로컬 commit하고 현재 HEAD를 `BASELINE_COMMIT`으로 동결한다.
+5. source manifest, `BASELINE_COMMIT`, `HARNESS_COMMIT` ancestry와 현재 branch를 검증하고 `baselineBranch`를 기록한다.
+6. `BASELINE_COMMIT`, source manifest와 baseline generation을 첫 measured baseline 전에 동결한다.
+7. commit SHA를 기록한 state와 필요한 자기 참조 metadata는 execution-affecting 변경이 없는 metadata-only local commit으로 저장하고 tracked working tree가 clean한지 확인한다.
+8. Phase 8B는 검증된 동일 `BASELINE_COMMIT`으로만 measured baseline을 실행한다.
 
 execution-affecting 파일은 최소한 다음을 포함한다.
 
@@ -1338,6 +1377,8 @@ execution-affecting 파일은 최소한 다음을 포함한다.
 - `performance/harness/**` 및 JMeter JMX
 - mock 설정과 테스트 데이터 생성 스크립트
 - DB·Redis invariant 검증 스크립트
+- Actuator 수집 동작
+- cleanup 스크립트
 
 동결 후 모든 selected experiment의 baseline이 끝날 때까지 execution-affecting 파일을 변경하지 않는다. 애플리케이션 코드, 하네스 동작, JMeter 시나리오, mock 설정, 테스트 데이터 생성 방식, DB·Redis invariant 검사 방식, active profile 또는 Docker 실행 설정이 변경되면 기존 generation을 `INVALIDATED`로 표시하고 baseline generation을 증가시킨다. 이후 새로운 `BASELINE_COMMIT`과 manifest를 확정하고 모든 selected experiment baseline을 재측정한다. 일부 실험만 새 commit으로 측정하지 않는다.
 
@@ -1388,7 +1429,11 @@ execution-affecting 파일은 최소한 다음을 포함한다.
 
 - 선택된 각 실험이 독립 measured run으로 실행됨
 - `CONFIRMED`, `PARTIALLY_CONFIRMED`, `DISPROVED`, `INCONCLUSIVE` 중 하나로 판정됨
-- 모든 baseline 측정이 끝난 애플리케이션 commit이 `BASELINE_COMMIT`으로 고정됨
+- Phase 8A에서 동결된 `BASELINE_COMMIT`이 존재함
+- 모든 baseline run의 `run-metadata.json`에 같은 `BASELINE_COMMIT`이 기록됨
+- execution-affecting 파일이 baseline source manifest와 일치함
+- baseline 실행 도중 `BASELINE_COMMIT`이 변경되지 않음
+- measured baseline 완료 후에는 metadata-only evidence만 추가됨
 - 각 run의 필수 세 파일과 필수 필드가 존재함
 - `performance/harness/bin/validate-run-artifacts.sh`가 exit code 0으로 종료됨
 
@@ -1533,7 +1578,7 @@ Pinpoint Web에 직접 접근할 수 없다면
 DISPROVED 또는 INCONCLUSIVE인 후보를 바로 개선하지 마라.
 필요하면 selected-experiments의 다음 순위 후보로 교체를 제안하라.
 
-모든 selected experiment baseline이 완료되면 검증된 baseline summary, artifact manifest와 state만 `BASELINE_EVIDENCE_COMMIT`으로 로컬 commit한다. 이 commit에는 execution-affecting 파일 변경을 포함하지 않고 SHA를 `performance/state.md`의 `baseline.baselineEvidenceCommit`에 기록한다.
+모든 selected experiment baseline이 완료되면 검증된 baseline summary, artifact manifest, state와 작은 검증 metadata만 `BASELINE_EVIDENCE_COMMIT`으로 로컬 commit한다. 이 metadata-only commit에는 execution-affecting 파일 변경을 포함하지 않는다. `BASELINE_COMMIT`이 `BASELINE_EVIDENCE_COMMIT`의 ancestor인지와 두 commit 사이 execution-affecting diff가 비어 있는지 검증한 뒤 SHA를 `performance/state.md`의 `baseline.baselineEvidenceCommit`에 기록한다.
 
 
 ---
@@ -1546,7 +1591,7 @@ DISPROVED 또는 INCONCLUSIVE인 후보를 바로 개선하지 마라.
 
 - `performance/plans/selected-experiments.md`
 - 대상 experiment의 `performance/results/<experimentId>/baseline/**`
-- `performance/state.md`의 `BASELINE_COMMIT`
+- `performance/state.md`의 `BASELINE_COMMIT`과 `BASELINE_EVIDENCE_COMMIT`
 
 ### Preconditions
 
@@ -1556,7 +1601,7 @@ DISPROVED 또는 INCONCLUSIVE인 후보를 바로 개선하지 마라.
 
 ### Allowed changes
 
-- `BASELINE_COMMIT`에서 만든 실험 전용 branch와 worktree의 최소 애플리케이션 변경
+- `BASELINE_EVIDENCE_COMMIT`에서 만든 실험 전용 branch와 worktree의 최소 애플리케이션 변경
 - 관련 테스트
 - `performance/results/<experimentId>/improvement-plan.md`
 - `performance/results/<experimentId>/after/**`
@@ -1579,7 +1624,8 @@ DISPROVED 또는 INCONCLUSIVE인 후보를 바로 개선하지 마라.
 
 ### Completion criteria
 
-- 실험별 별도 branch/worktree가 `BASELINE_COMMIT`에서 분기됨
+- 실험별 별도 branch/worktree가 `BASELINE_EVIDENCE_COMMIT`에서 시작됨
+- application 비교 기준이 `BASELINE_COMMIT`으로 기록됨
 - 다른 실험 commit이 포함되지 않음
 - `improvement-plan.md`와 `EXP_PLAN_COMMIT`이 애플리케이션 변경 전에 생성됨
 - 단위·통합 테스트가 통과하고 `IMPROVEMENT_COMMIT`이 기록됨
@@ -1590,7 +1636,9 @@ DISPROVED 또는 INCONCLUSIVE인 후보를 바로 개선하지 마라.
 
 ### Blocked conditions
 
-- merge base가 `BASELINE_COMMIT`이 아님
+- `BASELINE_COMMIT`이 `BASELINE_EVIDENCE_COMMIT`의 ancestor가 아님
+- `BASELINE_COMMIT`과 `BASELINE_EVIDENCE_COMMIT` 사이에 execution-affecting diff가 있음
+- branch 시작점이 `BASELINE_EVIDENCE_COMMIT`이 아님
 - worktree가 오염되었거나 사용자 변경을 안전하게 보존할 수 없음
 - baseline 비교 조건을 재현할 수 없음
 - change scope가 `CHANGE_SCOPE_REJECTED` 또는 `CHANGE_SCOPE_UNKNOWN`임
@@ -1606,9 +1654,9 @@ baseline에서 CONFIRMED 또는 PARTIALLY_CONFIRMED로 판정된 실험만 개�
 
 ### Step 0. Baseline commit과 worktree 격리
 
-모든 baseline에 사용된 하나의 애플리케이션 commit을 `BASELINE_COMMIT`으로 사용한다.
+모든 baseline에 사용된 하나의 애플리케이션 commit을 `BASELINE_COMMIT`으로 사용한다. 이 commit은 application before/after 비교 기준이며 state의 `git.applicationBaseCommit`에 기록한다.
 
-각 experiment는 반드시 `BASELINE_COMMIT`에서 분기한 별도 branch와 별도 worktree를 사용한다.
+각 experiment는 baseline evidence를 읽을 수 있도록 `BASELINE_EVIDENCE_COMMIT`에서 별도 branch와 별도 worktree를 만든다. 이 시작점은 state의 `git.branchStartCommit`에 기록한다.
 
 - `perf/exp-01`
 - `perf/exp-02`
@@ -1616,14 +1664,22 @@ baseline에서 CONFIRMED 또는 PARTIALLY_CONFIRMED로 판정된 실험만 개�
 
 실제 선정된 experimentId만 생성한다.
 
+예:
+
+```bash
+git worktree add ../planwith-exp-01 \
+  -b perf/exp-01 \
+  "$BASELINE_EVIDENCE_COMMIT"
+```
+
 변경 전에는 다음만 검증한다.
 
 1. 현재 branch가 대상 experiment 전용 branch인가
-2. `BASELINE_COMMIT`이 branch의 ancestor인가
-3. branch 시작 시점에 execution-affecting 차이가 없는가
-4. `BASELINE_COMMIT` 이후에는 허용된 baseline evidence만 존재하는가
+2. `BASELINE_COMMIT`이 `BASELINE_EVIDENCE_COMMIT`의 ancestor인가
+3. 두 commit 사이 execution-affecting diff가 없는가
+4. branch가 `BASELINE_EVIDENCE_COMMIT`에서 시작했는가
 5. uncommitted tracked 변경이 없는가
-6. 다른 experiment branch가 아닌가
+6. 다른 experiment의 `IMPROVEMENT_COMMIT`이 ancestry에 없는가
 
 변경 전에는 application diff가 아직 없으므로 변경 범위의 최종 판정을 하지 않는다.
 
@@ -1669,7 +1725,7 @@ baseline 근거가 없는 추측성 최적화는 제외하라.
 
 ### Step 2.5 변경 후 diff 검증
 
-`IMPROVEMENT_COMMIT` 생성 후 다음을 검사한다.
+`IMPROVEMENT_COMMIT` 생성 후 다음을 검사한다. application improvement diff는 `BASELINE_COMMIT..IMPROVEMENT_COMMIT` 범위에서 execution-affecting path만 검사한다. `BASELINE_EVIDENCE_COMMIT`과 `EXP_PLAN_COMMIT`의 metadata-only 변경은 application improvement diff에서 제외한다.
 
 1. `BASELINE_COMMIT..IMPROVEMENT_COMMIT` commit 목록
 2. 변경 파일 목록
@@ -1865,7 +1921,9 @@ raw artifact는 ignore 상태로 보존하고 `artifact-manifest.json`에서 상
 
 ### Preconditions
 
-- 완료된 comparison이 하나 이상 존재해야 한다.
+- Phase 10이 `COMPLETED` 또는 `NOT_APPLICABLE`이어야 한다.
+- 미해결 global blocker가 없어야 한다.
+- 최종 보고서에 사용할 comparison 목록이 확정되어야 한다.
 
 ### Allowed changes
 
@@ -1883,9 +1941,11 @@ raw artifact는 ignore 상태로 보존하고 `artifact-manifest.json`에서 상
 
 ### Completion criteria
 
+- `performance/results/final-summary.md`가 존재하고 검증됨
 - 실제 완료된 실험만 종합됨
 - 확인된 측정값만 사용됨
 - integration branch에서의 권장 병합 순서와 회귀 테스트가 제안됨
+- 최상위 `status: COMPLETED`, `currentPhase: null`, `lastCompletedPhase: phase-11`이 기록됨
 
 ### Blocked conditions
 
@@ -1929,7 +1989,7 @@ raw artifact는 ignore 상태로 보존하고 `artifact-manifest.json`에서 상
 
 확인되지 않은 수치를 만들어내지 마라.
 
-보고서를 `performance/results/final-summary.md`에 저장하고 `performance/state.md`를 `COMPLETED`로 갱신한다.
+보고서를 `performance/results/final-summary.md`에 저장하고 검증한 뒤에만 `performance/state.md`를 `status: COMPLETED`, `currentPhase: null`, `lastCompletedPhase: phase-11`로 갱신한다.
 
 ---
 
@@ -1968,7 +2028,8 @@ experiments:
     git:
       branch: null
       worktree: null
-      baseCommit: null
+      applicationBaseCommit: null
+      branchStartCommit: null
       planCommit: null
       improvementCommit: null
       reportCommit: null

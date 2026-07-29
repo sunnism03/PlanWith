@@ -1,17 +1,17 @@
 workflowVersion: 2
-status: COMPLETED
+status: IN_PROGRESS
 currentPhase: phase-8a
 lastCompletedPhase: phase-7
-nextAction: "Start the Baseline Goal at Phase 8A and create performance/results/EXP-01/baseline-plan.md"
+nextAction: "Verify the final source manifest, commit Phase 8A planning content as BASELINE_COMMIT, then record self-referential metadata"
 
 baseline:
   generation: 0
-  status: NOT_STARTED
-  harnessCommit: 0b3f4d8b05f344e286d50d41e9a4c322bcf26f42
+  status: IN_PROGRESS
+  harnessCommit: a01ac11c7bc194e80d96eec96e56a284e3cbc8ef
   baselineCommit: null
   baselineEvidenceCommit: null
   baselineBranch: null
-  sourceManifest: null
+  sourceManifest: performance/plans/baseline-source-manifest.json
   frozenAt: null
   invalidatedReason: null
 
@@ -82,12 +82,32 @@ phases:
       - performance/plans/selected-experiments.md
     blockers: []
   phase-8a:
+    status: IN_PROGRESS
+    startedAt: "2026-07-28T18:37:30Z"
+    completedAt: null
+    outputs:
+      - performance/results/EXP-01/baseline-plan.md
+      - performance/plans/baseline-source-manifest.json
+    blockers: []
+  phase-8b:
     status: NOT_STARTED
     startedAt: null
     completedAt: null
     outputs: []
     blockers: []
-  phase-8b:
+  phase-9:
+    status: NOT_STARTED
+    startedAt: null
+    completedAt: null
+    outputs: []
+    blockers: []
+  phase-10:
+    status: NOT_STARTED
+    startedAt: null
+    completedAt: null
+    outputs: []
+    blockers: []
+  phase-11:
     status: NOT_STARTED
     startedAt: null
     completedAt: null
@@ -102,10 +122,10 @@ experiments:
       - CHAT-PERF-01
       - CHAT-REL-01
     scenarioId: C1
-    status: NOT_STARTED
-    lastCompletedStep: phase-7-selection
+    status: IN_PROGRESS
+    lastCompletedStep: phase-8a-harness-ready
     baseline:
-      status: NOT_RUN
+      status: IN_PROGRESS
       runId: null
       verdict: null
       artifactManifest: null
@@ -113,7 +133,8 @@ experiments:
     git:
       branch: null
       worktree: null
-      baseCommit: null
+      applicationBaseCommit: null
+      branchStartCommit: null
       planCommit: null
       improvementCommit: null
       reportCommit: null
@@ -132,7 +153,7 @@ experiments:
       path: null
     cleanup:
       status: NOT_REQUIRED
-      lastRunId: dry-20260728T181551Z-40677
+      lastRunId: dry-20260729T022205Z-64356
       error: null
     rollback:
       status: NOT_REQUIRED
@@ -142,6 +163,7 @@ experiments:
     blockers: []
     outputs:
       - performance/plans/selected-experiments.md
+      - performance/results/EXP-01/baseline-plan.md
 globalBlockers: []
 completedOutputs:
   - performance/plans/context-verification.md
