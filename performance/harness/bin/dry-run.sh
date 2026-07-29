@@ -15,14 +15,18 @@ mkdir -p "$run_dir"
 redis_pid=
 mock_pid=
 app_pid=
+collector_pid=
 cleanup_processes() {
+  test -z "$collector_pid" || kill "$collector_pid" 2>/dev/null || true
   test -z "$app_pid" || kill "$app_pid" 2>/dev/null || true
   test -z "$mock_pid" || kill "$mock_pid" 2>/dev/null || true
   test -z "$redis_pid" || kill "$redis_pid" 2>/dev/null || true
+  test -z "$collector_pid" || wait "$collector_pid" 2>/dev/null || true
   test -z "$app_pid" || wait "$app_pid" 2>/dev/null || true
   test -z "$mock_pid" || wait "$mock_pid" 2>/dev/null || true
   test -z "$redis_pid" || wait "$redis_pid" 2>/dev/null || true
   app_pid=
+  collector_pid=
   mock_pid=
   redis_pid=
 }
@@ -43,6 +47,7 @@ jwt_secret=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 64)
 openai_key=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)
 db_path="$run_dir/planwith"
 
+SPRING_PROFILES_ACTIVE=dev-perf \
 SPRING_DATASOURCE_URL="jdbc:h2:file:$db_path;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1" \
 SPRING_DATASOURCE_USERNAME=sa \
 SPRING_DATASOURCE_PASSWORD= \
@@ -77,7 +82,8 @@ test "$ready" = true
   "http://127.0.0.1:$app_port" "$run_id" "$run_dir"
 
 "$root_dir/performance/harness/bin/collect-actuator.sh" \
-  "http://127.0.0.1:$app_port" "$run_dir/actuator.jsonl"
+  "http://127.0.0.1:9091" "$run_dir/actuator.jsonl" 15 5 &
+collector_pid=$!
 
 jmeter -n \
   -t "$root_dir/performance/harness/jmeter/chatbot-c1-dry-run.jmx" \
@@ -88,6 +94,9 @@ jmeter -n \
   -l "$run_dir/jmeter.raw.jtl" -j "$run_dir/jmeter.raw.log"
 
 test "$(awk -F, 'NR > 1 && $8 != "true" {n++} END {print n+0}' "$run_dir/jmeter.raw.jtl")" -eq 0
+wait "$collector_pid"
+collector_pid=
+jq -s -e 'length >= 2 and all(.[]; .status == "AVAILABLE")' "$run_dir/actuator.jsonl" >/dev/null
 
 "$root_dir/performance/harness/bin/verify-db-invariant.sh" \
   "http://127.0.0.1:$app_port" "$run_dir/authorization.runtime" "$run_dir/db-invariant.json"

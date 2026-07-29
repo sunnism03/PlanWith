@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: classpath:application-dev.yaml
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+management:
+  server:
+    address: 127.0.0.1
+    port: 9091
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
