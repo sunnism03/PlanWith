@@ -1,18 +1,18 @@
 workflowVersion: 2
 status: IN_PROGRESS
-currentPhase: phase-8a
-lastCompletedPhase: phase-7
-nextAction: "Verify the final source manifest, commit Phase 8A planning content as BASELINE_COMMIT, then record self-referential metadata"
+currentPhase: phase-8b
+lastCompletedPhase: phase-8a
+nextAction: "Start Phase 8B and execute the validated baseline plan without changing execution-affecting files"
 
 baseline:
   generation: 0
-  status: IN_PROGRESS
+  status: COMPLETED
   harnessCommit: a01ac11c7bc194e80d96eec96e56a284e3cbc8ef
-  baselineCommit: null
+  baselineCommit: 97432dc98f2ae8632151e4f301acb1831e79cf6d
   baselineEvidenceCommit: null
-  baselineBranch: null
+  baselineBranch: perf/chatbot-schedule
   sourceManifest: performance/plans/baseline-source-manifest.json
-  frozenAt: null
+  frozenAt: "2026-07-29T02:29:42Z"
   invalidatedReason: null
 
 phases:
@@ -82,9 +82,9 @@ phases:
       - performance/plans/selected-experiments.md
     blockers: []
   phase-8a:
-    status: IN_PROGRESS
+    status: COMPLETED
     startedAt: "2026-07-28T18:37:30Z"
-    completedAt: null
+    completedAt: "2026-07-29T02:29:42Z"
     outputs:
       - performance/results/EXP-01/baseline-plan.md
       - performance/plans/baseline-source-manifest.json
@@ -123,9 +123,9 @@ experiments:
       - CHAT-REL-01
     scenarioId: C1
     status: IN_PROGRESS
-    lastCompletedStep: phase-8a-harness-ready
+    lastCompletedStep: phase-8a-completed
     baseline:
-      status: IN_PROGRESS
+      status: NOT_RUN
       runId: null
       verdict: null
       artifactManifest: null
@@ -133,7 +133,7 @@ experiments:
     git:
       branch: null
       worktree: null
-      applicationBaseCommit: null
+      applicationBaseCommit: 97432dc98f2ae8632151e4f301acb1831e79cf6d
       branchStartCommit: null
       planCommit: null
       improvementCommit: null
@@ -176,3 +176,5 @@ completedOutputs:
   - performance/harness/harness-manifest.json
   - performance/plans/test-harness-report.md
   - performance/plans/selected-experiments.md
+  - performance/results/EXP-01/baseline-plan.md
+  - performance/plans/baseline-source-manifest.json

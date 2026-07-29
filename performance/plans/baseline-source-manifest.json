@@ -1,14 +1,14 @@
 {
   "manifestVersion": 1,
-  "generatedAt": "2026-07-29T02:25:42Z",
+  "generatedAt": "2026-07-29T02:29:42Z",
   "baselineGeneration": 0,
-  "readinessVerdict": "READY_TO_FREEZE",
-  "baselineCommit": null,
-  "candidateHead": "ffb32606d4bb49d757b5f91546e7d0dd462c38d6",
+  "readinessVerdict": "READY_FOR_PHASE_8B",
+  "baselineCommit": "97432dc98f2ae8632151e4f301acb1831e79cf6d",
+  "candidateHead": "97432dc98f2ae8632151e4f301acb1831e79cf6d",
   "harnessCommit": "a01ac11c7bc194e80d96eec96e56a284e3cbc8ef",
-  "baselineBranch": null,
+  "baselineBranch": "perf/chatbot-schedule",
   "candidateBranch": "perf/chatbot-schedule",
-  "frozenAt": null,
+  "frozenAt": "2026-07-29T02:29:42Z",
   "hashAlgorithm": "SHA-256",
   "hashConstruction": "For each group, sort listed existing paths bytewise, emit '<file-sha256><two spaces><path><newline>', then SHA-256 the resulting stream.",
   "executionPathHashes": {
@@ -94,7 +94,7 @@
   "dockerStatus": "NOT_APPLICABLE_LOCAL_JAR_BASELINE",
   "measurementEnvironment": "isolated local H2, dedicated local Redis, local mock OpenAI; measured run not executed",
   "verificationCommand": "performance/harness/bin/validate-harness.sh plus Phase 8A SHA-256 group verification",
-  "verificationStatus": "PASS_UNFROZEN",
+  "verificationStatus": "PASS",
   "blockers": [],
   "knownRisks": [
     {

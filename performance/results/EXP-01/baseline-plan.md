@@ -2,15 +2,15 @@
 
 ## Status
 
-- Readiness verdict: `PHASE_8A_READY_TO_FREEZE`
+- Readiness verdict: `READY_FOR_PHASE_8B`
 - Phase: `8A`
 - Measured baseline executed: **NO**
-- Baseline commit frozen: **NO**
+- Baseline commit frozen: **YES — `97432dc98f2ae8632151e4f301acb1831e79cf6d`**
 - Input experiment: `EXP-01`
 - hypothesisId: `CHAT-PERF-01`, `CHAT-REL-01`
 - scenarioId: `C1`
 
-The observability blocker is resolved and the execution-affecting harness changes are fixed by `HARNESS_COMMIT`. This plan remains non-executable until the remaining Phase 8A source freeze and clean-tree gates pass.
+The observability blocker is resolved, the execution-affecting harness changes are fixed by `HARNESS_COMMIT`, and the Phase 8A source snapshot is frozen as `BASELINE_COMMIT`. No measured command was executed in Phase 8A; execution is allowed only after the Phase 8B preflight revalidates this snapshot.
 
 ## Input files
 
@@ -33,6 +33,7 @@ The observability blocker is resolved and the execution-affecting harness change
 ### FACT
 
 - `HARNESS_COMMIT` is `a01ac11c7bc194e80d96eec96e56a284e3cbc8ef`; it contains the user dependency, test-only profile, isolated multi-user fixture and validated harness content.
+- `BASELINE_COMMIT` is `97432dc98f2ae8632151e4f301acb1831e79cf6d`; it was frozen before any measured baseline.
 - The final dry run `dry-20260729T022205Z-64356` passed with one user, mock OpenAI, isolated H2, isolated Redis, HTTP/body assertions, JSON extraction, DB/Redis invariants, cleanup, artifact validation and secret scan.
 - the user-added `build.gradle` dependency supplies `spring-boot-starter-actuator` without a separate version override.
 - `dev-perf` imports the existing dev configuration and binds the management server to `127.0.0.1:9091`.
@@ -77,8 +78,8 @@ The observability blocker is resolved and the execution-affecting harness change
 | Required Actuator metrics | PASS | HTTP, CPU, JVM, GC, Tomcat and Hikari runtime probes succeeded |
 | Actuator 5-second collection | PASS | available JSONL samples at elapsed seconds 0 and 5 |
 | Pinpoint | UNKNOWN | no access or supplied trace evidence |
-| Tracked working tree before freeze | PENDING | Phase 8A metadata is not yet committed |
-| Baseline source manifest | PENDING | current unfrozen snapshot recorded; commit and clean-tree verification remain |
+| Tracked working tree at freeze | PASS | Phase 8A content snapshot was committed before recording self-referential metadata |
+| Baseline source manifest | PASS | execution-affecting hashes match `BASELINE_COMMIT`; metadata records the frozen SHA |
 
 ## Planned test environment
 
@@ -205,7 +206,7 @@ No `DROP`, `TRUNCATE`, broad `DELETE`, destructive Git reset or production clean
 
 ## Planned execution sequence
 
-After the remaining Phase 8A Git and sample-count gates pass:
+During Phase 8B, after its preflight reconfirms the frozen source and empty/new result path:
 
 1. validate the source manifest and frozen commit;
 2. create a new runId and empty result directory;
@@ -219,7 +220,7 @@ After the remaining Phase 8A Git and sample-count gates pass:
 10. create and validate the artifact manifest;
 11. write summary and update state.
 
-There is deliberately no executable measured-run command in the current unfrozen plan. Adding one before the harness commit, source freeze and sample-count gates pass could allow an invalid baseline to be run accidentally.
+The command above is a documented Phase 8B command shape only. It was not executed during Phase 8A, and Phase 8B must stop if the frozen source, harness, environment, or result-path gates fail.
 
 ## Expected result files
 
@@ -235,4 +236,4 @@ None of these measured result files is created in Phase 8A.
 
 ## Resume action
 
-Regenerate and verify the source manifest against `HARNESS_COMMIT`, commit all Phase 8A planning content, record that commit as `BASELINE_COMMIT`, then update only self-referential metadata and prove the tracked working tree clean. The pre-existing `ToDoWithMeApplicationTests` package/configuration failure remains a declared non-observability risk; bootJar, mock dry run and runtime gates are the Phase 8A execution evidence.
+Resume at Phase 8B. Revalidate `BASELINE_COMMIT`, the source manifest, `HARNESS_COMMIT`, the non-production mock environment, and the new empty result path before executing the plan. The pre-existing `ToDoWithMeApplicationTests` package/configuration failure remains a declared non-observability risk; bootJar, mock dry run and runtime gates are the Phase 8A execution evidence.
