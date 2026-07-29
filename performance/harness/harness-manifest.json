@@ -1,17 +1,17 @@
 {
   "harnessVersion": "1.0.0",
-  "createdAt": "2026-07-28T18:16:22Z",
-  "harnessCommit": "0b3f4d8b05f344e286d50d41e9a4c322bcf26f42",
+  "createdAt": "2026-07-29T02:24:07Z",
+  "harnessCommit": "a01ac11c7bc194e80d96eec96e56a284e3cbc8ef",
   "jmeterPlanHashes": {
     "jmeter/chatbot-c1-dry-run.jmx": "3c2db653593628d046fe3b011554203a78517bbf10da1bbddb0550d9d589fcc6"
   },
   "scriptHashes": {
-    "bin/bootstrap-user.sh": "9c64088a79aef4827faa4ee7f3feaf3d473029ae3d81eff9ca468a12b7430e95",
+    "bin/bootstrap-user.sh": "6ea702274e2a127472c372a88877fce26f7055da86c36219c2ede9ace2532d26",
     "bin/cleanup.sh": "bfc7544aaea8214f58859e5afcac853b3865c4d65f0c92da54f18d569ce2629a",
-    "bin/collect-actuator.sh": "5698f8e43ee2181fb798f2a624fb9fa4d105933b46c406cf9931e4e8f5eda6b8",
+    "bin/collect-actuator.sh": "83152bc42196996780f685db60e0a70753dc114bc76945d9388b106fb3e9f0ea",
     "bin/collect-run-metadata.sh": "f03f956d95491460ccca303b31ec946b3bd7d097f8eb502876195a1d3462bc43",
     "bin/create-artifact-manifest.sh": "35b909c64183f3ff788682799dbca354a803fa82817c734773ddd5d88682be97",
-    "bin/dry-run.sh": "c2e1bfca245d8ccd7b9009435ffca31b8dc2f375c3cc146117f2317b58564404",
+    "bin/dry-run.sh": "44f62dfa06dd07ab1bf401d32e43d1a2992a6941409ad20a58a3a3414475c1cb",
     "bin/scan-secrets.sh": "359bcb28be09b32c67848db03a79a4a02ee9622a62cf0dea2d2ee87fae0130cb",
     "bin/validate-comparison.sh": "c5599773490fc7ae2d3226c386a9710bcf2d18a4c1c7c4a289dc88f0115f7993",
     "bin/validate-harness.sh": "f93a1f3b46999fd972123ab9757d5b3044d0459d3245dc1bc4c64b8329d04f08",
@@ -21,7 +21,7 @@
     "bin/verify-redis-invariant.sh": "fd545dbf8cb1d6878fa03e840685125f45eb7121d6be118f9b7f325bcce3abd3"
   },
   "mockConfigurationHash": "6eb3a09ff666f70587b58e02fd6d2eb07294f0894803ba5a5e961979097babe9",
-  "dryRunId": "dry-20260728T181551Z-40677",
+  "dryRunId": "dry-20260729T022205Z-64356",
   "dryRunStatus": "PASSED",
   "verificationCommand": "performance/harness/bin/validate-harness.sh",
   "secretScanStatus": "PASSED"
