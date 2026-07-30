@@ -2,7 +2,9 @@
   "manifestVersion": 1,
   "generatedAt": "2026-07-29T02:29:42Z",
   "baselineGeneration": 0,
-  "readinessVerdict": "READY_FOR_PHASE_8B",
+  "readinessVerdict": "INVALIDATED",
+  "invalidatedAt": "2026-07-30T15:49:41Z",
+  "invalidatedReason": "Execution-affecting harness, JMX, mock, cleanup, and invariant files changed after BASELINE_COMMIT. A new harness snapshot and baseline generation are required before any measured run.",
   "baselineCommit": "97432dc98f2ae8632151e4f301acb1831e79cf6d",
   "candidateHead": "97432dc98f2ae8632151e4f301acb1831e79cf6d",
   "harnessCommit": "a01ac11c7bc194e80d96eec96e56a284e3cbc8ef",
@@ -94,8 +96,14 @@
   "dockerStatus": "NOT_APPLICABLE_LOCAL_JAR_BASELINE",
   "measurementEnvironment": "isolated local H2, dedicated local Redis, local mock OpenAI; measured run not executed",
   "verificationCommand": "performance/harness/bin/validate-harness.sh plus Phase 8A SHA-256 group verification",
-  "verificationStatus": "PASS",
-  "blockers": [],
+  "verificationStatus": "INVALIDATED",
+  "blockers": [
+    {
+      "code": "STALE_HARNESS_AND_BASELINE",
+      "classification": "FACT",
+      "evidence": "Current execution-affecting harness files do not match the recorded HARNESS_COMMIT, scenario hashes, or BASELINE_COMMIT."
+    }
+  ],
   "knownRisks": [
     {
       "code": "EXISTING_GRADLE_TEST_FAILURE",

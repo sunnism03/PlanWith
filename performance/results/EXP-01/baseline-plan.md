@@ -2,15 +2,20 @@
 
 ## Status
 
-- Readiness verdict: `READY_FOR_PHASE_8B`
+- Readiness verdict: `INVALIDATED`
 - Phase: `8A`
 - Measured baseline executed: **NO**
-- Baseline commit frozen: **YES — `97432dc98f2ae8632151e4f301acb1831e79cf6d`**
+- Baseline commit frozen: **INVALIDATED — `97432dc98f2ae8632151e4f301acb1831e79cf6d`**
 - Input experiment: `EXP-01`
 - hypothesisId: `CHAT-PERF-01`, `CHAT-REL-01`
 - scenarioId: `C1`
 
-The observability blocker is resolved, the execution-affecting harness changes are fixed by `HARNESS_COMMIT`, and the Phase 8A source snapshot is frozen as `BASELINE_COMMIT`. No measured command was executed in Phase 8A; execution is allowed only after the Phase 8B preflight revalidates this snapshot.
+This historical local-environment plan is invalidated. Exact-key Redis ledger,
+cleanup, DB postcondition, deployment preflight, JMX, mock, and result-policy
+files changed after the recorded `HARNESS_COMMIT` and `BASELINE_COMMIT`.
+No measured command was executed. Do not execute this plan or reuse baseline
+generation 0. A user-approved harness content commit, regenerated manifest,
+and new deployed-environment Phase 8A generation are required first.
 
 ## Input files
 

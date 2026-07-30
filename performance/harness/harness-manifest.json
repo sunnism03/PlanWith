@@ -1,5 +1,8 @@
 {
   "harnessVersion": "1.0.0",
+  "manifestStatus": "INVALIDATED",
+  "invalidatedAt": "2026-07-30T15:49:41Z",
+  "invalidatedReason": "Exact-key Redis ledger, cleanup, DB postcondition, deployment preflight, JMX, mock, and result-policy files changed after the recorded HARNESS_COMMIT. Regenerate only after the user-approved harness content commit.",
   "createdAt": "2026-07-29T02:24:07Z",
   "harnessCommit": "a01ac11c7bc194e80d96eec96e56a284e3cbc8ef",
   "jmeterPlanHashes": {

@@ -47,3 +47,30 @@ dump.rdb
 DS_Store
 
 key/
+
+### Performance raw results and runtime secrets ###
+performance/results/**/raw/
+performance/results/**/runtime/
+performance/results/**/html-report/
+performance/results/**/*.jtl
+performance/results/**/*.jsonl
+performance/results/**/*.log
+performance/results/**/users.csv
+performance/results/**/*jwt*
+performance/results/**/*.secret
+performance/results/**/authorization.runtime
+performance/results/**/redis-tokens.runtime
+performance/results/**/redis-keys*.json
+performance/results/**/*screenshot*
+
+# Runtime-only JMeter identities and credentials
+performance/harness/data/*.csv
+performance/harness/data/*.jwt
+performance/harness/data/*.secret
+performance/harness/data/*authorization*
+
+# Harness source scripts are tracked even though generic IDE rules ignore bin/.
+!performance/harness/bin/
+!performance/harness/bin/*.sh
+performance/harness/data/runtime/
+performance/results/

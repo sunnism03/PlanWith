@@ -4,4 +4,6 @@ runtime/
 users.csv
 *.jwt
 *.secret
-
+authorization.runtime
+redis-tokens.runtime
+redis-keys*.json

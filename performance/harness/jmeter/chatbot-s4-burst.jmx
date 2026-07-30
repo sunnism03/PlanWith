@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="S4 Short synchronized burst">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Ignored runtime users CSV">
+        <stringProp name="filename">${__P(usersCsv)}</stringProp>
+        <stringProp name="fileEncoding">UTF-8</stringProp>
+        <stringProp name="variableNames">userAlias,jwt,userId,categoryId,groupId,groupEventId</stringProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">true</boolProp>
+        <boolProp name="recycle">${__P(recycleUsers,false)}</boolProp>
+        <boolProp name="stopThread">true</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="S4 Short synchronized burst">
+        <stringProp name="ThreadGroup.num_threads">${__P(threads,1)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(rampUp,1)}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <stringProp name="LoopController.loops">${__P(iterations,1)}</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <SynchronizingTimer guiclass="TestBeanGUI" testclass="SynchronizingTimer" testname="Synchronize burst">
+          <intProp name="groupSize">${__P(syncUsers,0)}</intProp>
+          <longProp name="timeoutInMs">${__P(syncTimeoutMs,10000)}</longProp>
+        </SynchronizingTimer>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /chatbot/messages">
+          <stringProp name="HTTPSampler.domain">${__P(host,127.0.0.1)}</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(port,18081)}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${__P(protocol,http)}</stringProp>
+          <stringProp name="HTTPSampler.path">${__P(apiPath,/chatbot/messages)}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${requestBody}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.connect_timeout">${__P(connectTimeout,5000)}</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">${__P(responseTimeout,15000)}</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Build request without logging secrets">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def intention = props.get('intention') ?: ''
+def value = intention ? intention : null
+def body = [intention:value, categoryId:vars.get('categoryId'),
+  prompt:'testRunId=' + (props.get('testRunId') ?: 'manual') + '; ' + (props.get('prompt') ?: 'create one event')]
+vars.put('requestBody', groovy.json.JsonOutput.toJson(body))</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Request headers">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${jwt}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Test-Run-Id</stringProp>
+                <stringProp name="Header.value">${__P(testRunId,manual)}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract chatbot token">
+            <stringProp name="JSONPostProcessor.referenceNames">chatbotToken</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.tokenReqDTO.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Status, body code, and token contract">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="script">def expectedStatus = props.get('expectedHttpStatus') ?: '200'
+def expectedBodyCode = props.get('expectedBodyCode')
+if (expectedBodyCode == null) expectedBodyCode = '201'
+def requireToken = (props.get('requireToken') ?: 'true').toBoolean()
+if (prev.getResponseCode() != expectedStatus) {
+  AssertionResult.setFailure(true)
+  AssertionResult.setFailureMessage('expected HTTP ' + expectedStatus + ' but received ' + prev.getResponseCode())
+  return
+}
+if (expectedBodyCode) {
+  try {
+    def parsed = new groovy.json.JsonSlurper().parseText(prev.getResponseDataAsString())
+    if (String.valueOf(parsed.code) != expectedBodyCode) {
+      AssertionResult.setFailure(true)
+      AssertionResult.setFailureMessage('expected body code ' + expectedBodyCode)
+      return
+    }
+  } catch (Exception ignored) {
+    AssertionResult.setFailure(true)
+    AssertionResult.setFailureMessage('response body is not valid JSON')
+    return
+  }
+}
+if (requireToken &amp;&amp; vars.get('chatbotToken') == 'NOT_FOUND') {
+  AssertionResult.setFailure(true)
+  AssertionResult.setFailureMessage('chatbot token missing')
+}</stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="External JTL writer">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time><latency>true</latency><timestamp>true</timestamp>
+              <success>true</success><label>true</label><code>true</code>
+              <message>true</message><threadName>true</threadName>
+              <dataType>true</dataType><encoding>false</encoding>
+              <assertions>true</assertions><subresults>true</subresults>
+              <responseData>false</responseData><samplerData>false</samplerData>
+              <xml>true</xml><fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders><requestHeaders>false</requestHeaders>
+              <responseDataOnError>true</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <bytes>true</bytes><sentBytes>true</sentBytes>
+              <url>true</url><threadCounts>true</threadCounts>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">${__P(resultJtl,performance/results/manual/jmeter/result.jtl)}</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

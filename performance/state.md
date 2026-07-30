@@ -2,18 +2,18 @@ workflowVersion: 2
 status: IN_PROGRESS
 currentPhase: phase-8b
 lastCompletedPhase: phase-8a
-nextAction: "Start Phase 8B and execute the validated baseline plan without changing execution-affecting files"
+nextAction: "Obtain approval for the exact-key safety harness commit, regenerate its manifest from the committed snapshot, then create a new Phase 8A baseline generation"
 
 baseline:
   generation: 0
-  status: COMPLETED
+  status: INVALIDATED
   harnessCommit: a01ac11c7bc194e80d96eec96e56a284e3cbc8ef
   baselineCommit: 97432dc98f2ae8632151e4f301acb1831e79cf6d
   baselineEvidenceCommit: null
   baselineBranch: perf/chatbot-schedule
   sourceManifest: performance/plans/baseline-source-manifest.json
   frozenAt: "2026-07-29T02:29:42Z"
-  invalidatedReason: null
+  invalidatedReason: "Execution-affecting harness, JMX, mock, cleanup, and invariant files changed after BASELINE_COMMIT; generation 0 cannot be used for measured runs."
 
 phases:
   phase-1:
@@ -90,17 +90,19 @@ phases:
       - performance/plans/baseline-source-manifest.json
     blockers: []
   phase-8b:
-    status: NOT_STARTED
+    status: BLOCKED
     startedAt: null
     completedAt: null
     outputs: []
-    blockers: []
+    blockers:
+      - "Baseline generation 0 and its harness/source manifests are INVALIDATED; no measured run is allowed until a new user-approved harness snapshot and Phase 8A freeze exist."
   phase-9:
     status: NOT_STARTED
     startedAt: null
     completedAt: null
     outputs: []
-    blockers: []
+    blockers:
+      - "Baseline generation 0 is INVALIDATED because execution-affecting harness files changed."
   phase-10:
     status: NOT_STARTED
     startedAt: null
@@ -123,9 +125,9 @@ experiments:
       - CHAT-REL-01
     scenarioId: C1
     status: IN_PROGRESS
-    lastCompletedStep: phase-8a-completed
+    lastCompletedStep: phase-8a-invalidated
     baseline:
-      status: NOT_RUN
+      status: INVALIDATED
       runId: null
       verdict: null
       artifactManifest: null
@@ -160,11 +162,13 @@ experiments:
       command: null
       error: null
     retryCount: 0
-    blockers: []
+    blockers:
+      - "EXP-01 baseline plan references invalidated generation 0; regenerate Phase 8A after the safe harness snapshot is committed."
     outputs:
       - performance/plans/selected-experiments.md
       - performance/results/EXP-01/baseline-plan.md
-globalBlockers: []
+globalBlockers:
+  - "STALE_HARNESS_AND_BASELINE: existing HARNESS_COMMIT, harness manifest, BASELINE_COMMIT, and baseline source manifest do not describe the current exact-key safety harness."
 completedOutputs:
   - performance/plans/context-verification.md
   - performance/plans/chatbot-code-map.md

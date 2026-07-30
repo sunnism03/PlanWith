@@ -5,12 +5,15 @@ root_dir=$(CDPATH= cd -- "$(dirname "$0")/../../.." && pwd)
 runtime_root="$root_dir/performance/harness/runtime"
 run_id="dry-$(date -u +%Y%m%dT%H%M%SZ)-$$"
 run_dir="$runtime_root/$run_id"
+redis_token_file="$run_dir/redis-tokens.runtime"
+redis_key_ledger="$run_dir/redis-keys.generated.json"
 redis_port=16379
 mock_port=18080
 app_port=18081
 started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
 mkdir -p "$run_dir"
+: > "$redis_token_file"
 
 redis_pid=
 mock_pid=
@@ -81,6 +84,10 @@ test "$ready" = true
 "$root_dir/performance/harness/bin/bootstrap-user.sh" \
   "http://127.0.0.1:$app_port" "$run_id" "$run_dir"
 
+"$root_dir/performance/harness/bin/verify-user-data-postcondition.sh" \
+  "http://127.0.0.1:$app_port" "$run_dir/users.csv" 2026 8 before \
+  "$run_dir/db-precondition.json"
+
 "$root_dir/performance/harness/bin/collect-actuator.sh" \
   "http://127.0.0.1:9091" "$run_dir/actuator.jsonl" 15 5 &
 collector_pid=$!
@@ -90,6 +97,7 @@ jmeter -n \
   -Jhost=127.0.0.1 -Jport="$app_port" \
   -Jthreads=1 -JrampUp=1 -JtestRunId="$run_id" \
   -JusersCsv="$run_dir/users.csv" \
+  -JredisTokenFile="$redis_token_file" \
   -JconnectTimeout=5000 -JresponseTimeout=15000 \
   -l "$run_dir/jmeter.raw.jtl" -j "$run_dir/jmeter.raw.log"
 
@@ -98,19 +106,19 @@ wait "$collector_pid"
 collector_pid=
 jq -s -e 'length >= 2 and all(.[]; .status == "AVAILABLE")' "$run_dir/actuator.jsonl" >/dev/null
 
-"$root_dir/performance/harness/bin/verify-db-invariant.sh" \
-  "http://127.0.0.1:$app_port" "$run_dir/authorization.runtime" "$run_dir/db-invariant.json"
+"$root_dir/performance/harness/bin/verify-user-data-postcondition.sh" \
+  "http://127.0.0.1:$app_port" "$run_dir/users.csv" 2026 8 after \
+  "$run_dir/db-postcondition.json"
+"$root_dir/performance/harness/bin/record-redis-keys.sh" \
+  127.0.0.1 "$redis_port" "$run_id" "$redis_token_file" "$redis_key_ledger"
 "$root_dir/performance/harness/bin/verify-redis-invariant.sh" \
-  "$redis_port" "$run_dir/redis-invariant.json"
-"$root_dir/performance/harness/bin/cleanup.sh" "$redis_port"
+  127.0.0.1 "$redis_port" "$redis_key_ledger" "$run_dir/redis-precondition.json"
+"$root_dir/performance/harness/bin/cleanup.sh" \
+  127.0.0.1 "$redis_port" "$redis_key_ledger" "$run_dir/cleanup.json"
 
-remaining=$(redis-cli -p "$redis_port" --scan --pattern 'chatbot*' | wc -l | tr -d ' ')
-jq -cn --argjson remaining "$remaining" \
-  '{status:(if $remaining == 0 then "PASS" else "FAIL" end),remainingChatbotKeys:$remaining}' \
-  > "$run_dir/cleanup.json"
-
-jq -e '.status == "PASS"' "$run_dir/db-invariant.json" >/dev/null
-jq -e '.status == "PASS"' "$run_dir/redis-invariant.json" >/dev/null
+jq -e '.status == "PASS"' "$run_dir/db-precondition.json" >/dev/null
+jq -e '.status == "PASS"' "$run_dir/db-postcondition.json" >/dev/null
+jq -e '.status == "PASS"' "$run_dir/redis-precondition.json" >/dev/null
 jq -e '.status == "PASS"' "$run_dir/cleanup.json" >/dev/null
 
 ended_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -127,12 +135,12 @@ cat > "$run_dir/summary.md" <<EOF
 - JMeter assertions: PASSED
 - JSON Extractor assertion: PASSED
 - Actuator collection file: CREATED
-- DB invariant script: EXECUTED
-- Redis invariant script: EXECUTED
-- cleanup: EXECUTED
+- DB precondition and postcondition: PASSED
+- Redis exact-key precondition: PASSED
+- Redis exact-key cleanup and postcondition: PASSED
 EOF
 
-rm -f "$run_dir/users.csv" "$run_dir/authorization.runtime"
+rm -f "$run_dir/users.csv" "$run_dir/authorization.runtime" "$redis_token_file"
 cleanup_processes
 "$root_dir/performance/harness/bin/create-artifact-manifest.sh" "$run_dir" "$run_id"
 "$root_dir/performance/harness/bin/validate-run-artifacts.sh" "$run_dir"
