@@ -1,0 +1,18 @@
+{
+  "name": "planwith-quality-evaluation",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "test": "node --test *.test.cjs",
+    "dataset": "node dataset.cjs",
+    "eval": "promptfoo eval -c generated/promptfooconfig.json --no-cache --no-table -o reports/promptfoo.json",
+    "report": "node report.cjs reports/promptfoo.json",
+    "prepare:eval": "node prepare.cjs"
+  },
+  "devDependencies": {
+    "promptfoo": "0.124.1"
+  }
+}

@@ -57,7 +57,6 @@ public class ChatbotController {
 
         // analyzeIntention() 호출해서 텍스트 의도 분석 후
         // createResponseJson() 호출
-        chatbotService.analyzeIntention(user, tokenReqDTO);
         return ApiResponse.onCreateSuccess(chatbotService.createResponseJson(user, tokenReqDTO));
     }
 

@@ -1,8 +1,8 @@
-package com.JAI.chatbot.domain;
+package com.JAI.chatbot.evaluation.baseline;
 
 import java.time.LocalDateTime;
 
-public class JsonConstants {
+public class LegacyConstants {
 
     public static final String DATE_INFO = "오늘은 " + LocalDateTime.now() + "이야";
 

@@ -1,0 +1,107 @@
+{
+  "verified_at": "2026-10-24T10:24:22.622696+09:00",
+  "base_commit": "cb3a50128c60ad431c0118de92ce3a6a1069b313",
+  "tested_state": "Working tree for codex/llm-response-quality; source is committed together with this report",
+  "java": {
+    "suites": [
+      {
+        "name": "com.JAI.chatbot.approval.repository.ApprovalLedgerRepositoryTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.approval.service.ApprovalIntegrationTest",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.approval.service.ApprovalOrchestratorTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.controller.ApprovalHttpTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.quality.BaselineRegressionTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.quality.GenerationSafetyTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.quality.OpenAiTransportTest",
+        "tests": 21,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.JAI.chatbot.quality.QualityPipelineTest",
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.example.JAI.ToDoWithMeApplicationTests",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "tests": 101,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "node_tests": {
+    "total": 30,
+    "passed": 30,
+    "failed": 0
+  },
+  "promptfoo_mock_only": {
+    "version": "0.124.1",
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "errors": 0
+  },
+  "negative_checks": {
+    "missing_api_key": "2 provider errors; CLI exit 100, expected fail-closed result; report gate INFRASTRUCTURE_FAILURE",
+    "unreviewed_holdout": "prepare exits 1 NOT_RUN, expected fail-closed result"
+  },
+  "real_llm": {
+    "status": "NOT_RUN",
+    "api_calls": 0,
+    "reason": "OPENAI_API_KEY unavailable; 0 human-reviewed labels",
+    "baseline_metrics": null,
+    "candidate_metrics": null
+  },
+  "dataset": {
+    "total": 200,
+    "development": 139,
+    "holdout": 61,
+    "human_reviewed": 0,
+    "review_required": 200
+  },
+  "build": "test bootJar evaluationClasspath succeeded; Java 17; MySQL 8.0.40 and Redis 7.2-alpine Testcontainers tests executed"
+}

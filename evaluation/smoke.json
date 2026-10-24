@@ -1,0 +1,12 @@
+{
+  "description": "MOCK ONLY: Promptfoo wiring, not model quality",
+  "prompts": ["{{user_input}}"],
+  "providers": [
+    {"id":"file://smoke-provider.cjs","label":"baseline","config":{"mode":"baseline"}},
+    {"id":"file://smoke-provider.cjs","label":"candidate","config":{"mode":"candidate"}}
+  ],
+  "tests": [{"vars":{"test_id":"MOCK-ONLY","user_input":"내일 독서","label":{"expected_intent":"TODO","expected_status":"READY","expected_items":[{"title":"독서","date":"2026-10-24","time":null}]}},"assert":[{"type":"javascript","value":"file://assertion.cjs"}]}],
+  "sharing": false,
+  "writeLatestResults": false,
+  "evaluateOptions": {"repeat":3,"maxConcurrency":1,"cache":false}
+}

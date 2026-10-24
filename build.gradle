@@ -76,3 +76,11 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Test-only CLI harness: no web endpoint, component scan, Redis or database wiring.
+tasks.register('evaluationClasspath') {
+    dependsOn testClasses
+    doLast {
+        file("$buildDir/evaluation-classpath.txt").text = sourceSets.test.runtimeClasspath.asPath
+    }
+}

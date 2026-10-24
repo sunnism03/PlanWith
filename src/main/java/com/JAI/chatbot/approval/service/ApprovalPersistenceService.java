@@ -92,7 +92,7 @@ public class ApprovalPersistenceService {
 
         if ("EVENT".equals(intent)) {
             List<ChatbotEventRespDTO> events = proposal.getChatbotEventRespDTO();
-            validateEvents(events);  // Validate ALL before writing ANY item.
+            com.JAI.chatbot.quality.BusinessValidator.events(events);  // Validate ALL before writing ANY item.
             for (int i = 0; i < events.size(); i++) {
                 ChatbotEventRespDTO e = events.get(i);
                 PersonalEvent event = PersonalEvent.builder()
@@ -117,7 +117,7 @@ public class ApprovalPersistenceService {
             }
         } else if ("TODO".equals(intent) || "PLAN_RECOMMENDATION".equals(intent)) {
             List<ChatbotTodoRespDTO> todos = proposal.getChatbotTodoRespDTO();
-            validateTodos(todos);
+            com.JAI.chatbot.quality.BusinessValidator.todos(todos);
             for (int i = 0; i < todos.size(); i++) {
                 ChatbotTodoRespDTO t = todos.get(i);
                 PersonalTodo todo = PersonalTodo.create(t.getTitle().trim(), t.getDate(),
@@ -136,31 +136,6 @@ public class ApprovalPersistenceService {
         UUID itemId = com.JAI.chatbot.approval.dto.ProposalIdentity.itemId(token, type, index);
         itemRepository.save(ApprovalItem.of(ledger, itemId, type, id));
         results.add(new ApprovalResult.ItemResult(itemId, type, id));
-    }
-
-    private static void validateEvents(List<ChatbotEventRespDTO> events) {
-        if (events == null || events.isEmpty()) throw badRequest("등록할 일정이 없습니다");
-        for (ChatbotEventRespDTO event : events) {
-            if (event == null || event.getTitle() == null || event.getTitle().isBlank()
-                    || event.getTitle().length() > 255
-                    || event.getStartDate() == null || event.getEndDate() == null
-                    || event.getStartDate().isAfter(event.getEndDate())
-                    || (event.getStartDate().equals(event.getEndDate())
-                        && event.getStartTime() != null && event.getEndTime() != null
-                        && event.getStartTime().isAfter(event.getEndTime()))) {
-                throw badRequest("일정의 제목 또는 날짜/시간 형식이 잘못되었습니다");
-            }
-        }
-    }
-
-    private static void validateTodos(List<ChatbotTodoRespDTO> todos) {
-        if (todos == null || todos.isEmpty()) throw badRequest("등록할 할 일이 없습니다");
-        for (ChatbotTodoRespDTO todo : todos) {
-            if (todo == null || todo.getTitle() == null || todo.getTitle().isBlank()
-                    || todo.getTitle().length() > 255 || todo.getDate() == null) {
-                throw badRequest("할 일의 제목 또는 날짜가 잘못되었습니다");
-            }
-        }
     }
 
     private String serialize(ApprovalResult result) {

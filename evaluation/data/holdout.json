@@ -1,0 +1,2224 @@
+[
+  {
+    "test_id": "PW-029",
+    "scenario_family": "calendar:boundary-15",
+    "user_input": "2026-11-30에 15차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "15차 정기검사",
+        "startDate": "2026-11-30",
+        "endDate": "2026-11-30",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-30",
+        "endDate": "2026-11-30"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-030",
+    "scenario_family": "calendar:boundary-15",
+    "user_input": "2026-11-30부터 2026-12-03까지 15차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "15차 출장",
+        "startDate": "2026-11-30",
+        "endDate": "2026-12-03",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-30",
+        "endDate": "2026-12-03"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-031",
+    "scenario_family": "calendar:boundary-16",
+    "user_input": "2026-12-31에 16차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "16차 정기검사",
+        "startDate": "2026-12-31",
+        "endDate": "2026-12-31",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-12-31",
+        "endDate": "2026-12-31"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-032",
+    "scenario_family": "calendar:boundary-16",
+    "user_input": "2026-12-31부터 2027-01-04까지 16차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "16차 출장",
+        "startDate": "2026-12-31",
+        "endDate": "2027-01-04",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-12-31",
+        "endDate": "2027-01-04"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-033",
+    "scenario_family": "calendar:boundary-17",
+    "user_input": "2027-01-01에 17차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "17차 정기검사",
+        "startDate": "2027-01-01",
+        "endDate": "2027-01-01",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2027-01-01",
+        "endDate": "2027-01-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-034",
+    "scenario_family": "calendar:boundary-17",
+    "user_input": "2027-01-01부터 2027-01-02까지 17차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "17차 출장",
+        "startDate": "2027-01-01",
+        "endDate": "2027-01-02",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2027-01-01",
+        "endDate": "2027-01-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-035",
+    "scenario_family": "calendar:boundary-18",
+    "user_input": "2026-01-01에 18차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "18차 정기검사",
+        "startDate": "2026-01-01",
+        "endDate": "2026-01-01",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-01-01",
+        "endDate": "2026-01-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-036",
+    "scenario_family": "calendar:boundary-18",
+    "user_input": "2026-01-01부터 2026-01-03까지 18차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "18차 출장",
+        "startDate": "2026-01-01",
+        "endDate": "2026-01-03",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-01-01",
+        "endDate": "2026-01-03"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-037",
+    "scenario_family": "calendar:boundary-19",
+    "user_input": "2030-12-31에 19차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "19차 정기검사",
+        "startDate": "2030-12-31",
+        "endDate": "2030-12-31",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2030-12-31",
+        "endDate": "2030-12-31"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-038",
+    "scenario_family": "calendar:boundary-19",
+    "user_input": "2030-12-31부터 2031-01-03까지 19차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "19차 출장",
+        "startDate": "2030-12-31",
+        "endDate": "2031-01-03",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2030-12-31",
+        "endDate": "2031-01-03"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-039",
+    "scenario_family": "calendar:boundary-20",
+    "user_input": "2025-02-28에 20차 정기검사 일정 등록해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "20차 정기검사",
+        "startDate": "2025-02-28",
+        "endDate": "2025-02-28",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2025-02-28",
+        "endDate": "2025-02-28"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-040",
+    "scenario_family": "calendar:boundary-20",
+    "user_input": "2025-02-28부터 2025-03-04까지 20차 출장 일정 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "20차 출장",
+        "startDate": "2025-02-28",
+        "endDate": "2025-03-04",
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2025-02-28",
+        "endDate": "2025-03-04"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": null,
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "calendar"
+  },
+  {
+    "test_id": "PW-062",
+    "scenario_family": "relative:boundary-8",
+    "user_input": "내일 자료 제출 할 일 추가",
+    "reference_date": "2026-09-30",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "자료 제출",
+        "date": "2026-10-01",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-063",
+    "scenario_family": "relative:boundary-8",
+    "user_input": "모레 독서 할 일 추가",
+    "reference_date": "2026-09-30",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "독서",
+        "date": "2026-10-02",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-064",
+    "scenario_family": "relative:boundary-8",
+    "user_input": "어제 운동 기록 할 일 추가",
+    "reference_date": "2026-09-30",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "운동 기록",
+        "date": "2026-09-29",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-09-29"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-065",
+    "scenario_family": "relative:boundary-9",
+    "user_input": "내일 자료 제출 할 일 추가",
+    "reference_date": "2027-01-01",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "자료 제출",
+        "date": "2027-01-02",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2027-01-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-066",
+    "scenario_family": "relative:boundary-9",
+    "user_input": "모레 독서 할 일 추가",
+    "reference_date": "2027-01-01",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "독서",
+        "date": "2027-01-03",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2027-01-03"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-067",
+    "scenario_family": "relative:boundary-9",
+    "user_input": "어제 운동 기록 할 일 추가",
+    "reference_date": "2027-01-01",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "운동 기록",
+        "date": "2026-12-31",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-12-31"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-068",
+    "scenario_family": "relative:boundary-10",
+    "user_input": "내일 자료 제출 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "자료 제출",
+        "date": "2026-10-24",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-069",
+    "scenario_family": "relative:boundary-10",
+    "user_input": "모레 독서 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "독서",
+        "date": "2026-10-25",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-25"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-070",
+    "scenario_family": "relative:boundary-10",
+    "user_input": "어제 운동 기록 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "운동 기록",
+        "date": "2026-10-22",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-22"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": "RELATIVE_DATE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "relative"
+  },
+  {
+    "test_id": "PW-091",
+    "scenario_family": "time:boundary-11",
+    "user_input": "2026-11-01 23:59:59에 11번 알림 확인 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "11번 알림 확인",
+        "date": "2026-11-01",
+        "time": "23:59:59"
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": "23:59:59"
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-092",
+    "scenario_family": "time:boundary-11",
+    "user_input": "2026-11-02 23:59:59에 11번 온라인 점검 일정 추가. 종료 시각은 미정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "11번 온라인 점검",
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02",
+        "startTime": "23:59:59",
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": "23:59:59",
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-093",
+    "scenario_family": "time:boundary-12",
+    "user_input": "2026-11-01 00:00:01에 12번 알림 확인 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "12번 알림 확인",
+        "date": "2026-11-01",
+        "time": "00:00:01"
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": "00:00:01"
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-094",
+    "scenario_family": "time:boundary-12",
+    "user_input": "2026-11-02 00:00:01에 12번 온라인 점검 일정 추가. 종료 시각은 미정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "12번 온라인 점검",
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02",
+        "startTime": "00:00:01",
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": "00:00:01",
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-095",
+    "scenario_family": "time:boundary-13",
+    "user_input": "2026-11-01 06:30:00에 13번 알림 확인 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "13번 알림 확인",
+        "date": "2026-11-01",
+        "time": "06:30:00"
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": "06:30:00"
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-096",
+    "scenario_family": "time:boundary-13",
+    "user_input": "2026-11-02 06:30:00에 13번 온라인 점검 일정 추가. 종료 시각은 미정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "13번 온라인 점검",
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02",
+        "startTime": "06:30:00",
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": "06:30:00",
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-097",
+    "scenario_family": "time:boundary-14",
+    "user_input": "2026-11-01 18:45:00에 14번 알림 확인 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "14번 알림 확인",
+        "date": "2026-11-01",
+        "time": "18:45:00"
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": "18:45:00"
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-098",
+    "scenario_family": "time:boundary-14",
+    "user_input": "2026-11-02 18:45:00에 14번 온라인 점검 일정 추가. 종료 시각은 미정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "14번 온라인 점검",
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02",
+        "startTime": "18:45:00",
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": "18:45:00",
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-099",
+    "scenario_family": "time:boundary-15",
+    "user_input": "2026-11-01 오후 10시 5분에 15번 알림 확인 할 일 추가",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "15번 알림 확인",
+        "date": "2026-11-01",
+        "time": "22:05:00"
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-01"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": "22:05:00"
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-100",
+    "scenario_family": "time:boundary-15",
+    "user_input": "2026-11-02 오후 10시 5분에 15번 온라인 점검 일정 추가. 종료 시각은 미정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [
+      {
+        "title": "15번 온라인 점검",
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02",
+        "startTime": "22:05:00",
+        "endTime": null
+      }
+    ],
+    "expected_date": [
+      {
+        "startDate": "2026-11-02",
+        "endDate": "2026-11-02"
+      }
+    ],
+    "expected_time": [
+      {
+        "startTime": "22:05:00",
+        "endTime": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "medium",
+    "error_category": null,
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "time"
+  },
+  {
+    "test_id": "PW-115",
+    "scenario_family": "multiple:boundary-15",
+    "user_input": "2026-11-15 장보기, 2026-11-16 우편 발송, 2026-11-17 보고서 제출, 2026-11-18 자료 정리 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-15",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-16",
+        "time": null
+      },
+      {
+        "title": "보고서 제출",
+        "date": "2026-11-17",
+        "time": null
+      },
+      {
+        "title": "자료 정리",
+        "date": "2026-11-18",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-15"
+      },
+      {
+        "date": "2026-11-16"
+      },
+      {
+        "date": "2026-11-17"
+      },
+      {
+        "date": "2026-11-18"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-116",
+    "scenario_family": "multiple:boundary-16",
+    "user_input": "2026-11-16 장보기, 2026-11-17 우편 발송, 2026-11-18 보고서 제출, 2026-11-19 자료 정리, 2026-11-20 세탁 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-16",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-17",
+        "time": null
+      },
+      {
+        "title": "보고서 제출",
+        "date": "2026-11-18",
+        "time": null
+      },
+      {
+        "title": "자료 정리",
+        "date": "2026-11-19",
+        "time": null
+      },
+      {
+        "title": "세탁",
+        "date": "2026-11-20",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-16"
+      },
+      {
+        "date": "2026-11-17"
+      },
+      {
+        "date": "2026-11-18"
+      },
+      {
+        "date": "2026-11-19"
+      },
+      {
+        "date": "2026-11-20"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-117",
+    "scenario_family": "multiple:boundary-17",
+    "user_input": "2026-11-17 장보기, 2026-11-18 우편 발송 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-17",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-18",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-17"
+      },
+      {
+        "date": "2026-11-18"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-118",
+    "scenario_family": "multiple:boundary-18",
+    "user_input": "2026-11-18 장보기, 2026-11-19 우편 발송, 2026-11-20 보고서 제출 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-18",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-19",
+        "time": null
+      },
+      {
+        "title": "보고서 제출",
+        "date": "2026-11-20",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-18"
+      },
+      {
+        "date": "2026-11-19"
+      },
+      {
+        "date": "2026-11-20"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-119",
+    "scenario_family": "multiple:boundary-19",
+    "user_input": "2026-11-19 장보기, 2026-11-20 우편 발송, 2026-11-21 보고서 제출, 2026-11-22 자료 정리 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-19",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-20",
+        "time": null
+      },
+      {
+        "title": "보고서 제출",
+        "date": "2026-11-21",
+        "time": null
+      },
+      {
+        "title": "자료 정리",
+        "date": "2026-11-22",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-19"
+      },
+      {
+        "date": "2026-11-20"
+      },
+      {
+        "date": "2026-11-21"
+      },
+      {
+        "date": "2026-11-22"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-120",
+    "scenario_family": "multiple:boundary-20",
+    "user_input": "2026-11-20 장보기, 2026-11-21 우편 발송, 2026-11-22 보고서 제출, 2026-11-23 자료 정리, 2026-11-24 세탁 각각 할 일로 추가해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [
+      {
+        "title": "장보기",
+        "date": "2026-11-20",
+        "time": null
+      },
+      {
+        "title": "우편 발송",
+        "date": "2026-11-21",
+        "time": null
+      },
+      {
+        "title": "보고서 제출",
+        "date": "2026-11-22",
+        "time": null
+      },
+      {
+        "title": "자료 정리",
+        "date": "2026-11-23",
+        "time": null
+      },
+      {
+        "title": "세탁",
+        "date": "2026-11-24",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-11-20"
+      },
+      {
+        "date": "2026-11-21"
+      },
+      {
+        "date": "2026-11-22"
+      },
+      {
+        "date": "2026-11-23"
+      },
+      {
+        "date": "2026-11-24"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "ITEM_CARDINALITY",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "multiple"
+  },
+  {
+    "test_id": "PW-135",
+    "scenario_family": "ambiguous:boundary-15",
+    "user_input": "2026-11-01인지 11-02인지 회의 일정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-136",
+    "scenario_family": "ambiguous:boundary-16",
+    "user_input": "그날 책 반납 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-137",
+    "scenario_family": "ambiguous:boundary-17",
+    "user_input": "이전에 말한 날 면담 일정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-138",
+    "scenario_family": "ambiguous:boundary-18",
+    "user_input": "2026-11-01 오후까지 회의 일정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-139",
+    "scenario_family": "ambiguous:boundary-19",
+    "user_input": "2026-11-01 아침 적당한 시각에 택배 접수 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-140",
+    "scenario_family": "ambiguous:boundary-20",
+    "user_input": "농담 하나 들려줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EXCEPTION",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "AMBIGUOUS_INPUT",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "ambiguous"
+  },
+  {
+    "test_id": "PW-155",
+    "scenario_family": "invalid:boundary-15",
+    "user_input": "2026-11-01 같은 날 16:00부터 15:59까지 회의 일정",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_DATE_RANGE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-156",
+    "scenario_family": "invalid:boundary-16",
+    "user_input": "2026-11-01 25:00 약 복용 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_TIME",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-157",
+    "scenario_family": "invalid:boundary-17",
+    "user_input": "2026-11-01 12:61 약 복용 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_TIME",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-158",
+    "scenario_family": "invalid:boundary-18",
+    "user_input": "2026-11-01 24:30 약 복용 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_TIME",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-159",
+    "scenario_family": "invalid:boundary-19",
+    "user_input": "2026-11-01 99:00 약 복용 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_TIME",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-160",
+    "scenario_family": "invalid:boundary-20",
+    "user_input": "2026-11-01 23:59:61 약 복용 할 일",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "TODO",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": null,
+    "expected_status": "AMBIGUOUS_INPUT",
+    "difficulty": "medium",
+    "error_category": "INVALID_TIME",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "invalid"
+  },
+  {
+    "test_id": "PW-175",
+    "scenario_family": "recurrence:boundary-15",
+    "user_input": "2026-11-01부터 매년 생일 운동 일정 10회 반복",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매년 생일"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-176",
+    "scenario_family": "recurrence:boundary-16",
+    "user_input": "2026-11-01부터 매주 화목 운동 일정 2027-01-01까지",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매주 화목"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-177",
+    "scenario_family": "recurrence:boundary-17",
+    "user_input": "2026-11-01부터 매일 2번 운동 일정 10회 반복",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매일 2번"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-178",
+    "scenario_family": "recurrence:boundary-18",
+    "user_input": "2026-11-01부터 매월 31일 운동 일정 2027-01-01까지",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매월 31일"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-179",
+    "scenario_family": "recurrence:boundary-19",
+    "user_input": "2026-11-01부터 매년 1월 첫 월요일 운동 일정 10회 반복",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매년 1월 첫 월요일"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-180",
+    "scenario_family": "recurrence:boundary-20",
+    "user_input": "2026-11-01부터 매일 자정 운동 일정 2027-01-01까지",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "EVENT",
+    "expected_items": [],
+    "expected_date": [],
+    "expected_time": [],
+    "expected_recurrence": {
+      "supported": false,
+      "rule_text": "매일 자정"
+    },
+    "expected_status": "UNSUPPORTED_RECURRENCE",
+    "difficulty": "hard",
+    "error_category": "UNSUPPORTED_RECURRENCE",
+    "label_review_status": "review_required",
+    "label_basis": "deterministic_calendar_or_policy",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "recurrence"
+  },
+  {
+    "test_id": "PW-195",
+    "scenario_family": "plan:boundary-15",
+    "user_input": "2026-11-15까지 사진 정리를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "사진 정리 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "사진 정리 마무리",
+        "date": "2026-11-15",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-15"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  },
+  {
+    "test_id": "PW-196",
+    "scenario_family": "plan:boundary-16",
+    "user_input": "2026-11-16까지 독서 감상문를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "독서 감상문 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "독서 감상문 마무리",
+        "date": "2026-11-16",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-16"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  },
+  {
+    "test_id": "PW-197",
+    "scenario_family": "plan:boundary-17",
+    "user_input": "2026-11-17까지 알고리즘 학습를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "알고리즘 학습 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "알고리즘 학습 마무리",
+        "date": "2026-11-17",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-17"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  },
+  {
+    "test_id": "PW-198",
+    "scenario_family": "plan:boundary-18",
+    "user_input": "2026-11-18까지 기타 연습를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "기타 연습 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "기타 연습 마무리",
+        "date": "2026-11-18",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-18"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  },
+  {
+    "test_id": "PW-199",
+    "scenario_family": "plan:boundary-19",
+    "user_input": "2026-11-19까지 요리 연습를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "요리 연습 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "요리 연습 마무리",
+        "date": "2026-11-19",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-19"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  },
+  {
+    "test_id": "PW-200",
+    "scenario_family": "plan:boundary-20",
+    "user_input": "2026-11-20까지 전시 준비를 끝내는 계획 추천해줘",
+    "reference_date": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "expected_intent": "PLAN_RECOMMENDATION",
+    "expected_items": [
+      {
+        "title": "전시 준비 준비",
+        "date": "2026-10-24",
+        "time": null
+      },
+      {
+        "title": "전시 준비 마무리",
+        "date": "2026-11-20",
+        "time": null
+      }
+    ],
+    "expected_date": [
+      {
+        "date": "2026-10-24"
+      },
+      {
+        "date": "2026-11-20"
+      }
+    ],
+    "expected_time": [
+      {
+        "time": null
+      },
+      {
+        "time": null
+      }
+    ],
+    "expected_recurrence": null,
+    "expected_status": "READY",
+    "difficulty": "hard",
+    "error_category": "OPEN_ENDED_PLAN",
+    "label_review_status": "review_required",
+    "label_basis": "synthetic_draft",
+    "reviewer": null,
+    "reviewed_at": null,
+    "split": "holdout",
+    "category": "plan"
+  }
+]

@@ -52,3 +52,9 @@ key/
 ## Resources
 /src/main/resources
 /src/test/resources/application-test.yaml
+# Local evaluation dependencies, synthetic model outputs and generated configurations
+evaluation/node_modules/
+evaluation/generated/
+evaluation/reports/*.json
+!evaluation/reports/local-verification.json
+.promptfoo/

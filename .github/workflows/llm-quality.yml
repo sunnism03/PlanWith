@@ -1,0 +1,97 @@
+name: LLM quality
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: ['codex/llm-response-quality']
+  workflow_dispatch:
+    inputs:
+      run_live:
+        description: 'Run paid real-model evaluation on reviewed holdout (trusted code only)'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deterministic:
+    name: Deterministic quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: ./gradlew clean test bootJar evaluationClasspath
+      - run: node evaluation/dataset.cjs
+      - run: node --test evaluation/*.test.cjs
+      - run: npm ci --prefix evaluation
+      - name: Promptfoo wiring smoke test (MOCK ONLY)
+        env:
+          PROMPTFOO_DISABLE_TELEMETRY: '1'
+          PROMPTFOO_DISABLE_UPDATE: '1'
+        run: evaluation/node_modules/.bin/promptfoo eval -c evaluation/smoke.json --no-cache --no-table -o evaluation/reports/smoke.json
+      - name: Real LLM evaluation status
+        run: echo 'Real LLM semantic quality NOT_RUN in PR checks. Deterministic checks are not semantic quality approval.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deterministic-test-reports
+          path: build/reports/tests/test
+  live:
+    name: Reviewed LLM quality gate
+    if: github.event_name == 'workflow_dispatch' && inputs.run_live
+    needs: deterministic
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    # Configure required reviewers on this environment. Never use pull_request_target.
+    environment: llm-evaluation
+    env:
+      PROMPTFOO_DISABLE_TELEMETRY: '1'
+      PROMPTFOO_DISABLE_UPDATE: '1'
+      EVAL_MODEL: gpt-4o-mini-2024-07-18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: evaluation/package-lock.json
+      - run: npm ci --prefix evaluation
+      - run: ./gradlew evaluationClasspath
+      - name: Require reviewed labels
+        run: node evaluation/prepare.cjs
+      - name: Evaluate paired baseline and candidate (3 repeats)
+        id: evaluate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        working-directory: evaluation
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo 'NOT_RUN: OPENAI_API_KEY missing. Quality has not passed.' >> "$GITHUB_STEP_SUMMARY"
+            exit 3
+          fi
+          npm run eval
+        continue-on-error: true
+      - name: Aggregate and enforce quality gate
+        if: always() && steps.evaluate.outcome != 'skipped'
+        run: node evaluation/report.cjs evaluation/reports/promptfoo.json
+      - name: Preserve report failure state
+        if: failure()
+        run: echo 'LLM quality did not pass. Review label coverage, API availability and summary report.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: synthetic-llm-evaluation
+          path: evaluation/reports/*.json
+          retention-days: 7

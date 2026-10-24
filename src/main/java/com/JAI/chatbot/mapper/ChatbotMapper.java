@@ -3,8 +3,6 @@ package com.JAI.chatbot.mapper;
 import com.JAI.chatbot.controller.dto.response.ChatGPTRespDTO;
 import com.JAI.chatbot.controller.dto.response.ChatbotEventRespDTO;
 import com.JAI.chatbot.controller.dto.response.ChatbotTodoRespDTO;
-import com.JAI.chatbot.exception.ChatbotBadRequestException;
-import com.JAI.chatbot.exception.ChatbotUnprocessableEntityException;
 import com.JAI.event.DTO.request.PersonalEventCreateReqDTO;
 import com.JAI.todo.controller.request.PersonalTodoCreateReq;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,12 +10,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -25,80 +19,66 @@ public class ChatbotMapper {
 
     private final ObjectMapper mapper;
 
-    public List<ChatbotEventRespDTO> toChatbotEventResp(ChatGPTRespDTO chatGPTRespDTO) {
-        try {
-            // ChatGPT 응답의 content(JSON 문자열)를 추출
-            String content = chatGPTRespDTO.getChoices().get(0).getMessage().getContent();
-
-            // content에서 JSON 객체만 추출 (정규식 사용)
-            String jsonContent = extractJson(content);
-            if (jsonContent == null) {
-                throw new ChatbotUnprocessableEntityException("ChatGPT 응답에서 유효한 JSON을 찾지 못했습니다");
-            }
-
-            // JSON을 파싱하여 List<ChatbotEventRespDTO>로 변환
-            List<ChatbotEventRespDTO> events = mapper.readValue(
-                    mapper.readTree(jsonContent).get("events").toString(),
-                    new TypeReference<>() {}
-            );
-
-            // 검증 및 처리 로직 추가
-            return events.stream()
-                    .map(event -> {
-                        if (event.getStartDate() == null) {
-                            throw new ChatbotBadRequestException("startDate는 null일 수 없습니다");
-                        }
-                        if (event.getEndDate() == null) {
-                            // endDate가 null이면 startDate와 동일하게 설정
-                            return ChatbotEventRespDTO.builder()
-                                    .title(event.getTitle())
-                                    .startDate(event.getStartDate())
-                                    .endDate(event.getStartDate())
-                                    .startTime(event.getStartTime())
-                                    .endTime(event.getEndTime())
-                                    .build();
-                        }
-                        return event; // 기본적으로 그대로 반환
-                    })
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ChatbotUnprocessableEntityException("ChatGPT 응답이 적절하지 않습니다");
-        }
+    public List<ChatbotEventRespDTO> toChatbotEventResp(ChatGPTRespDTO response) {
+        return events(com.JAI.chatbot.service.ChatGPTServiceImpl.content(response));
     }
-
-    public List<ChatbotTodoRespDTO> toChatbotTodoResp(ChatGPTRespDTO chatGPTRespDTO) {
+    public List<ChatbotTodoRespDTO> toChatbotTodoResp(ChatGPTRespDTO response) {
+        return todos(com.JAI.chatbot.service.ChatGPTServiceImpl.content(response));
+    }
+    public List<ChatbotEventRespDTO> events(String content) {
+        var tree = parse(content, "EVENT");
         try {
-            // ChatGPT 응답의 content(JSON 문자열)를 추출
-            String content = chatGPTRespDTO.getChoices().get(0).getMessage().getContent();
-
-            // content에서 JSON 객체만 추출 (정규식 사용)
-            String jsonContent = extractJson(content);
-
-            if (jsonContent == null) {
-                throw new ChatbotUnprocessableEntityException("ChatGPT 응답에서 유효한 JSON을 찾지 못했습니다");
+            List<ChatbotEventRespDTO> items = mapper.convertValue(tree.get("events"), new TypeReference<>() {});
+            com.JAI.chatbot.quality.BusinessValidator.events(items);
+            return items;
+        } catch (com.JAI.chatbot.quality.QualityException e) { throw e; }
+        catch (IllegalArgumentException e) { throw invalid("events.date/time"); }
+    }
+    public List<ChatbotTodoRespDTO> todos(String content) {
+        var tree = parse(content, "TODO");
+        try {
+            List<ChatbotTodoRespDTO> items = mapper.convertValue(tree.get("todos"), new TypeReference<>() {});
+            com.JAI.chatbot.quality.BusinessValidator.todos(items);
+            return items;
+        } catch (com.JAI.chatbot.quality.QualityException e) { throw e; }
+        catch (IllegalArgumentException e) { throw invalid("todos.date/time"); }
+    }
+    public com.fasterxml.jackson.databind.JsonNode parse(String content, String intent) {
+        try {
+            var tree = mapper.reader().with(com.fasterxml.jackson.core.JsonParser.Feature.STRICT_DUPLICATE_DETECTION).with(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_TRAILING_TOKENS).readTree(content);
+            String key = "EVENT".equals(intent) ? "events" : "todos";
+            if (tree == null || !tree.isObject() || tree.size() != 2 || !tree.has("status") || !tree.get("status").isTextual()
+                    || !tree.has(key) || !tree.get(key).isArray()) throw invalid("root");
+            String status = tree.get("status").asText();
+            if (java.util.Set.of("AMBIGUOUS_INPUT", "UNSUPPORTED_RECURRENCE").contains(status)) {
+                if (!tree.get(key).isEmpty()) throw invalid("status/items");
+                throw new com.JAI.chatbot.quality.QualityException(com.JAI.chatbot.quality.QualityError.valueOf(status), "input");
             }
-
-            // JSON을 파싱하여 List<ChatbotTodoRespDTO>로 변환
-            List<ChatbotTodoRespDTO> todos = mapper.readValue(
-                    mapper.readTree(jsonContent).get("todos").toString(),
-                    new TypeReference<>() {}
-            );
-
-            // 검증 및 처리 로직 추가
-            return todos.stream()
-                    .map(todo -> {
-                        if (todo.getDate() == null) {
-                            throw new ChatbotBadRequestException("date는 null일 수 없습니다");
+            if (!"READY".equals(status)) throw invalid("status");
+            var fields = "EVENT".equals(intent) ? java.util.Set.of("title", "startDate", "endDate", "startTime", "endTime") : java.util.Set.of("title", "date", "time");
+            for (var item : tree.get(key)) {
+                if (!item.isObject() || item.size() != fields.size()) throw invalid("item.fields");
+                for (String field : fields) {
+                    var value = item.get(field);
+                    if (value == null || !(value.isTextual() || (!field.equals("title") && value.isNull()))) throw invalid(field);
+                    if (value.isTextual() && !field.equals("title")) {
+                        String text = value.asText();
+                        if (field.toLowerCase().contains("date")) {
+                            if (!text.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) throw invalid(field);
+                            java.time.LocalDate.parse(text);
+                        } else {
+                            if (!text.matches("[0-9]{2}:[0-9]{2}:[0-9]{2}")) throw invalid(field);
+                            java.time.LocalTime.parse(text);
                         }
-                        return todo; // 기본적으로 그대로 반환
-                    })
-                    .collect(Collectors.toList());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ChatbotUnprocessableEntityException("ChatGPT 응답이 적절하지 않습니다");
-        }
+                    }
+                }
+            }
+            return tree;
+        } catch (com.JAI.chatbot.quality.QualityException e) { throw e; }
+        catch (Exception e) { throw invalid("json/date/time"); }
+    }
+    private static com.JAI.chatbot.quality.QualityException invalid(String field) {
+        return new com.JAI.chatbot.quality.QualityException(com.JAI.chatbot.quality.QualityError.SCHEMA_INVALID, field);
     }
 
     public PersonalEventCreateReqDTO toPersonalEventCreateReqDTO (
@@ -130,21 +110,4 @@ public class ChatbotMapper {
         return personalTodoCreateReq;
     }
 
-    private String extractJson(String content) {
-//        System.out.println("extractJson");
-//        System.out.println("content: "+content);
-        // 정규식을 이용하여 JSON 객체 추출
-        Pattern pattern = Pattern.compile("\\{.*\\}", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(content);
-
-        if (matcher.find()) {
-//            System.out.println("matcher: "+matcher);
-//            System.out.println("matcher group: "+matcher.group());
-            return matcher.group(); // 첫 번째 JSON 객체 반환
-        }
-
-        return null; // JSON 객체가 없는 경우 null 반환
-    }
-
 }
-

@@ -30,8 +30,6 @@ public class RedisChatbotUtil {
 
     // token을 이용해 저장된 key값을 조회
     public String getKeyByToken(String token) {
-//        System.out.println("getKeyByToken");
-//        System.out.println("token: "+token);
         String key = redisUtil.get(PREFIX_KEY_TOKEN + token);
         if (key == null) {
             throw new ChatbotNotFoundException("토큰에 해당하는 키가 Redis에 존재하지 않습니다");
@@ -41,9 +39,6 @@ public class RedisChatbotUtil {
 
     // ChatbotRedisData를 Redis에 저장
     public void saveChatbotData(String key, String token, UUID userId, ChatbotReqDTO chatbotReqDTO) {
-//        System.out.println("saveChatbotData");
-//        System.out.println("key: "+key);
-//        System.out.println("token: "+token);
         try {
             ChatbotRedisDataDTO chatbotData = ChatbotRedisDataDTO.builder()
                     .token(token)
@@ -65,12 +60,9 @@ public class RedisChatbotUtil {
 
     // Redis에서 ChatbotRedisData를 조회
     public ChatbotRedisDataDTO getChatbotData(String token) {
-//        System.out.println("getChatbotData");
-//        System.out.println("token: "+token);
 
         String key = getKeyByToken(token);
 
-//        System.out.println("key: "+key);
 
         try {
             String json = redisUtil.get(PREFIX_CHATBOT + key); // Redis에서 JSON 가져오기
@@ -85,11 +77,8 @@ public class RedisChatbotUtil {
     }
 
     public void saveChatbotReq(String token, ChatbotReqDTO chatbotReqDTO) {
-//        System.out.println("saveChatbotReq");
-//        System.out.println("token: "+token);
 
         String key = getKeyByToken(token);
-//        System.out.println("key: "+key);
 
         ChatbotRedisDataDTO existingData = getChatbotData(token);
         if(existingData == null) {
@@ -109,13 +98,10 @@ public class RedisChatbotUtil {
 
     // ChatbotEventResp 저장/수정 (기존 ChatbotRedisData 업데이트)
     public void saveChatbotEventResp(String token, List<ChatbotEventRespDTO> chatbotEventRespDTO) {
-//        System.out.println("saveChatbotEventResp");
-//        System.out.println("token: "+token);
 
         // token을 통해 key 조회
         String key = getKeyByToken(token);
 
-//        System.out.println("key: "+key);
 
         // 기존 데이터 가져오기
         ChatbotRedisDataDTO existingData = getChatbotData(token);
@@ -139,13 +125,10 @@ public class RedisChatbotUtil {
 
     // ChatbotTodoResp 저장/수정 (기존 ChatbotRedisData 업데이트)
     public void saveChatbotTodoResp(String token, List<ChatbotTodoRespDTO> chatbotTodoRespDTO) {
-//        System.out.println("saveChatbotTodoResp");
-//        System.out.println("token: "+token);
 
         // token을 통해 key 조회
         String key = getKeyByToken(token);
 
-//        System.out.println("key: "+key);
 
         // 기존 데이터 가져오기
         ChatbotRedisDataDTO existingData = getChatbotData(token);
@@ -170,11 +153,8 @@ public class RedisChatbotUtil {
     // ChatbotRedisData를 Redis에 저장하는 내부 메서드
     private void saveChatbotData(String token, ChatbotRedisDataDTO chatbotData) {
         try {
-//            System.out.println("saveChatbotData");
-//            System.out.println("token: "+token);
 
             String key = getKeyByToken(token);
-//            System.out.println("key: "+key);
 
             String json = objectMapper.writeValueAsString(chatbotData); // DTO -> JSON 변환
             redisUtil.save(PREFIX_CHATBOT + key, json, ttlSeconds);    // Redis 저장
@@ -187,6 +167,13 @@ public class RedisChatbotUtil {
     // Immutable READY snapshot, written only after the LLM output has been mapped.
     // Changes to a recommendation must receive a new token.
     private void saveApprovalSnapshot(String token, ChatbotRedisDataDTO data) {
+        if (data.getChatbotReqDTO() == null) throw new ChatbotUnprocessableEntityException("추천 유형이 없습니다");
+        String intent = data.getChatbotReqDTO().getIntention();
+        if ("EVENT".equals(intent) && data.getChatbotTodoRespDTO() == null) {
+            com.JAI.chatbot.quality.BusinessValidator.events(data.getChatbotEventRespDTO());
+        } else if (("TODO".equals(intent) || "PLAN_RECOMMENDATION".equals(intent)) && data.getChatbotEventRespDTO() == null) {
+            com.JAI.chatbot.quality.BusinessValidator.todos(data.getChatbotTodoRespDTO());
+        } else throw new ChatbotUnprocessableEntityException("추천 유형과 항목이 일치하지 않습니다");
         try {
             String json = objectMapper.writeValueAsString(com.JAI.chatbot.approval.dto.ProposalIdentity.ready(data, objectMapper));
             if (!redisUtil.saveIfAbsent("approval:{" + token + "}:proposal", json, ttlSeconds)) {

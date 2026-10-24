@@ -10,6 +10,7 @@ import lombok.*;
 public class ChatGPTRespDTO {
 
     private List<ChatGPTChoiceDTO> choices;
+    private com.fasterxml.jackson.databind.JsonNode usage;
 
 }
 

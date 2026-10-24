@@ -17,6 +17,13 @@ public class ChatGPTReqDTO {
 
     @NotBlank
     private String model;
+    @com.fasterxml.jackson.annotation.JsonProperty("response_format")
+    private Map<String, Object> responseFormat;
+    @Builder.Default
+    private double temperature = 0;
+    @Builder.Default
+    @com.fasterxml.jackson.annotation.JsonProperty("max_completion_tokens")
+    private int maxCompletionTokens = 4096;
 
     @NotBlank
     private List<ChatGPTMessageDTO> messages;
